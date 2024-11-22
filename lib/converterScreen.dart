@@ -60,7 +60,7 @@ class ConverterScreen extends StatelessWidget {
                                 screenWidth > 700 ? screenWidth * 0.25 : 2000,
                             height: 70,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(26),
                               color: Colors.black,
                             ),
                             child: Row(
