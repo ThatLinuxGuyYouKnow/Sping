@@ -146,6 +146,7 @@ class ConvertButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
       width: width,
       height: 56,
       decoration: BoxDecoration(
@@ -158,9 +159,7 @@ class ConvertButton extends StatelessWidget {
           Text(
             'Convert',
             style: GoogleFonts.ubuntu(
-              color: Colors.white,
-              fontSize: 18,
-            ),
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 12),
           const Icon(
