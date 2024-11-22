@@ -73,7 +73,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                             GestureDetector(
                               onTap: () {
                                 print('hit gestur detector');
-                                _pickImage();
+                                PlatformFile file = _pickImage();
                               },
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.click,
@@ -228,8 +228,8 @@ class ResponsiveAppBar extends StatelessWidget {
 
 _pickImage() async {
   try {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowedExtensions: ['.svg']);
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['svg']);
     return result;
   } catch (Error) {
     print(Error);
