@@ -228,7 +228,8 @@ class ResponsiveAppBar extends StatelessWidget {
 
 _pickImage() async {
   try {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowedExtensions: ['.svg']);
     return result;
   } catch (Error) {
     print(Error);
