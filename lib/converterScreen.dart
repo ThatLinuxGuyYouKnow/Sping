@@ -54,7 +54,7 @@ class ConverterScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: screenHeight * 0.04),
                         child: Container(
-                          width: screenWidth * 0.1,
+                          width: screenWidth > 700 ? screenWidth * 0.15 : 900,
                           height: 70,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
