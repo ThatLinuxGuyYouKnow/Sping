@@ -7,16 +7,13 @@ class ConverterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use LayoutBuilder instead of direct MediaQuery for better responsiveness
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Calculate responsive values based on constraints
         final isDesktop = constraints.maxWidth > 900;
         final isTablet =
             constraints.maxWidth > 600 && constraints.maxWidth <= 900;
         final isMobile = constraints.maxWidth <= 600;
 
-        // Calculate container width based on screen size
         final containerWidth = isDesktop
             ? constraints.maxWidth * 0.4
             : isTablet
@@ -43,8 +40,8 @@ class ConverterScreen extends StatelessWidget {
                     Container(
                       width: containerWidth,
                       constraints: const BoxConstraints(
-                        minHeight: 400,
-                        maxHeight: 600,
+                        minHeight: 350,
+                        maxHeight: 450,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
@@ -52,36 +49,101 @@ class ConverterScreen extends StatelessWidget {
                         border: Border.all(color: Colors.black),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 24, horizontal: 30),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Upload your PNG',
+                              'Upload PNG File',
                               style: GoogleFonts.ubuntu(
-                                fontSize: isDesktop ? 24 : 20,
-                                fontWeight: FontWeight.bold,
+                                fontSize: isDesktop ? 20 : 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black87,
                               ),
                             ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                  horizontal: 30,
+                            const SizedBox(height: 16),
+                            Container(
+                              height: isDesktop ? 200 : 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.grey.shade400,
+                                  style: BorderStyle.solid,
+                                  width: 2,
                                 ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    color: Colors.grey.withOpacity(0.01),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.upload_outlined,
+                                      size: 32,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        style: GoogleFonts.ubuntu(
+                                          fontSize: 14,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                        children: [
+                                          const TextSpan(
+                                              text: 'Click to upload '),
+                                          TextSpan(
+                                            text: 'or drag and drop\n',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade500,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 'PNG file up to 10MB',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade500,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            ConvertButton(
-                              width: isDesktop
-                                  ? containerWidth * 0.4
-                                  : containerWidth * 0.8,
+                            const SizedBox(height: 50),
+                            Center(
+                              child: Container(
+                                width: isDesktop
+                                    ? containerWidth * 0.8
+                                    : containerWidth * 0.9,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.grey.shade400,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Convert to SVG',
+                                      style: GoogleFonts.ubuntu(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -124,50 +186,13 @@ class ResponsiveAppBar extends StatelessWidget {
         if (isDesktop)
           ElevatedButton(
             onPressed: () {},
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
             child: Text(
               'Convert SVG to PNG here',
               style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black),
             ),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
           ),
       ],
-    );
-  }
-}
-
-class ConvertButton extends StatelessWidget {
-  final double width;
-
-  const ConvertButton({
-    super.key,
-    required this.width,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      width: width,
-      height: 56,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(26),
-        color: Colors.black,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Convert',
-            style: GoogleFonts.ubuntu(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 12),
-          const Icon(
-            Icons.arrow_forward,
-            color: Colors.white,
-          ),
-        ],
-      ),
     );
   }
 }
