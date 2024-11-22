@@ -1,0 +1,3 @@
+enum Scale {
+  small200,
+}
