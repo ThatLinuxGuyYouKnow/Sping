@@ -57,7 +57,7 @@ class ConverterScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'PNG',
+                              'Upload your PNG',
                               style: GoogleFonts.ubuntu(
                                 fontSize: isDesktop ? 24 : 20,
                                 fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class ConverterScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 20,
-                                  horizontal: 24,
+                                  horizontal: 30,
                                 ),
                                 child: Container(
                                   decoration: BoxDecoration(
