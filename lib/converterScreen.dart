@@ -10,10 +10,11 @@ class ConverterScreen extends StatefulWidget {
   State<ConverterScreen> createState() => _ConverterScreenState();
 }
 
+bool uploadBoxInFocus = false;
+
 class _ConverterScreenState extends State<ConverterScreen> {
   @override
   Widget build(BuildContext context) {
-    bool uploadBoxInFocus = false;
     return LayoutBuilder(
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth > 900;
@@ -26,7 +27,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
             : isTablet
                 ? constraints.maxWidth * 0.6
                 : constraints.maxWidth * 0.85;
-        final PointerHoverEventListener onPointerHover;
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 80,
@@ -43,7 +43,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 80),
                     Container(
                       width: containerWidth,
                       constraints: const BoxConstraints(
@@ -70,62 +70,74 @@ class _ConverterScreenState extends State<ConverterScreen> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            MouseRegion(
-                              onExit: (event) {
-                                setState(() {
-                                  uploadBoxInFocus = false;
-                                });
+                            GestureDetector(
+                              onTap: () {
+                                print('hit gestur detector');
+                                _pickImage();
                               },
-                              onHover: (Pointer) => setState(() {
-                                uploadBoxInFocus = true;
-                              }),
-                              child: Container(
-                                height: isDesktop ? 200 : 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: Colors.grey.shade400,
-                                    style: BorderStyle.solid,
-                                    width: 2,
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                onExit: (event) {
+                                  setState(() {
+                                    uploadBoxInFocus = false;
+                                  });
+                                },
+                                onEnter: (event) => setState(() {
+                                  uploadBoxInFocus = true;
+                                }),
+                                child: Container(
+                                  height: isDesktop ? 200 : 150,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: uploadBoxInFocus
+                                          ? Colors.black.withOpacity(0.4)
+                                          : Colors.grey.shade400,
+                                      style: BorderStyle.solid,
+                                      width: 2,
+                                    ),
                                   ),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.upload_outlined,
-                                        size: 32,
-                                        color: Colors.grey.shade600,
-                                      ),
-                                      const SizedBox(height: 12),
-                                      RichText(
-                                        textAlign: TextAlign.center,
-                                        text: TextSpan(
-                                          style: GoogleFonts.ubuntu(
-                                            fontSize: 14,
-                                            color: Colors.grey.shade600,
-                                          ),
-                                          children: [
-                                            const TextSpan(
-                                                text: 'Click to upload '),
-                                            TextSpan(
-                                              text: 'or drag and drop\n',
-                                              style: TextStyle(
-                                                color: Colors.grey.shade500,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: 'PNG file up to 10MB',
-                                              style: TextStyle(
-                                                color: Colors.grey.shade500,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.upload_outlined,
+                                          size: 32,
+                                          color: uploadBoxInFocus
+                                              ? Colors.black
+                                              : Colors.grey.shade600,
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(height: 12),
+                                        RichText(
+                                          textAlign: TextAlign.center,
+                                          text: TextSpan(
+                                            style: GoogleFonts.ubuntu(
+                                              fontSize: 14,
+                                              color: Colors.grey.shade600,
+                                            ),
+                                            children: [
+                                              const TextSpan(
+                                                  text: 'Click to upload '),
+                                              TextSpan(
+                                                text: 'or drag and drop\n',
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: 'PNG file up to 10MB',
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade500,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -211,5 +223,14 @@ class ResponsiveAppBar extends StatelessWidget {
           ),
       ],
     );
+  }
+}
+
+_pickImage() async {
+  try {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    return result;
+  } catch (Error) {
+    print(Error);
   }
 }
