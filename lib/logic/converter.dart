@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
-import 'package:flutter/material.dart';
 
 class SvgToPngConverter {
   final String svgContent;

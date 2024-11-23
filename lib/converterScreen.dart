@@ -23,7 +23,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _pickImage() async {
+    pickImage() async {
       try {
         FilePickerResult? result = await FilePicker.platform
             .pickFiles(type: FileType.custom, allowedExtensions: ['svg']);
@@ -33,7 +33,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
           pickedFileName = result.files.first.name;
         });
         return fileBytes;
-      } catch (Error) {
+      } on Error {
         print(Error);
       }
     }
@@ -43,7 +43,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
         final isDesktop = constraints.maxWidth > 900;
         final isTablet =
             constraints.maxWidth > 600 && constraints.maxWidth <= 900;
-        final isMobile = constraints.maxWidth <= 600;
+        //  final isMobile = constraints.maxWidth <= 600;
 
         final containerWidth = isDesktop
             ? constraints.maxWidth * 0.4
@@ -99,7 +99,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   : () async {
                                       print('Hit Gesture Detector');
 
-                                      final selectedFile = await _pickImage();
+                                      final selectedFile = await pickImage();
 
                                       if (selectedFile != null) {
                                         // Read file content as string (SVG content)
@@ -147,7 +147,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                               color:
                                                   Colors.black.withOpacity(0.1),
                                               blurRadius: 8,
-                                              offset: Offset(0, 4),
+                                              offset: const Offset(0, 4),
                                             ),
                                           ],
                                         ),
@@ -174,7 +174,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                             ),
                                             const SizedBox(width: 12),
                                             IconButton(
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.cancel,
                                                 color: Colors.redAccent,
                                               ),
@@ -341,11 +341,11 @@ class ResponsiveAppBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.sync_alt,
                     color: Colors.black,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
                     'Convert PNG to SVG here',
                     style:
