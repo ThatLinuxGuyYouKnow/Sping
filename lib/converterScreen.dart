@@ -13,13 +13,13 @@ class ConverterScreen extends StatefulWidget {
   State<ConverterScreen> createState() => _ConverterScreenState();
 }
 
-bool uploadBoxInFocus = false;
-bool userHasPickedFile = false;
-late String pickedFileName;
-late PlatformFile pickedFile;
-late String pngURL;
-
 class _ConverterScreenState extends State<ConverterScreen> {
+  bool uploadBoxInFocus = false;
+  bool userHasPickedFile = false;
+  late String pickedFileName;
+  late PlatformFile pickedFile;
+  late String pngURL;
+
   @override
   Widget build(BuildContext context) {
     _pickImage() async {
@@ -91,7 +91,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                 color: Colors.black87,
                               ),
                             ),
-                            const SizedBox(height: 16),
+                            SizedBox(height: userHasPickedFile ? 30 : 16),
                             GestureDetector(
                               onTap: userHasPickedFile
                                   ? () {}
@@ -105,7 +105,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         final svgContent =
                                             utf8.decode(selectedFile);
 
-                                        // Pass content to the converter
                                         final converter = SvgToPngConverter(
                                           svgContent: svgContent,
                                           scaleWidth:
@@ -134,14 +133,56 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                 }),
                                 child: userHasPickedFile
                                     ? Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10),
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          color: Colors.white,
+                                          border: Border.all(
+                                              color: Colors.grey.shade400,
+                                              width: 1.5),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.1),
+                                              blurRadius: 8,
+                                              offset: Offset(0, 4),
+                                            ),
+                                          ],
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
                                         child: Row(
                                           children: [
-                                            Text(
-                                              pickedFileName,
-                                              style: GoogleFonts.ubuntu(),
-                                            )
+                                            Icon(
+                                              Icons.insert_drive_file_outlined,
+                                              color: Colors.grey.shade600,
+                                              size: 32,
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: Text(
+                                                pickedFileName,
+                                                style: GoogleFonts.ubuntu(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black87,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.cancel,
+                                                color: Colors.redAccent,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  userHasPickedFile = false;
+                                                });
+                                              },
+                                            ),
                                           ],
                                         ),
                                       )
@@ -208,7 +249,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       ),
                               ),
                             ),
-                            const SizedBox(height: 60),
+                            SizedBox(height: userHasPickedFile ? 120 : 60),
                             Center(
                               child: GestureDetector(
                                 onTap: () {
@@ -280,7 +321,7 @@ class ResponsiveAppBar extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            'PNG To SVG Converter',
+            ' SVG To PNG Converter',
             style: GoogleFonts.ubuntu(
               color: Colors.white,
               fontSize: isDesktop ? 32 : 20,
@@ -292,9 +333,23 @@ class ResponsiveAppBar extends StatelessWidget {
           ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-            child: Text(
-              'Convert SVG to PNG here',
-              style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.sync_alt,
+                    color: Colors.black,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Convert PNG to SVG here',
+                    style:
+                        GoogleFonts.ubuntu(fontSize: 16, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
           ),
       ],
