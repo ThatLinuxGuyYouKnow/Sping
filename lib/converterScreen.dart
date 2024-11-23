@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/logic/converter.dart';
 import 'package:sping/logic/pngTosvgConverter.dart';
 import 'package:sping/model/scaleEnums.dart';
+import 'package:sping/widgets/errorSnackbar.dart';
 import 'package:sping/widgets/footer.dart';
 import 'package:sping/widgets/scaleSelector.dart';
 
@@ -68,11 +69,13 @@ class _ConverterScreenState extends State<ConverterScreen> {
         FilePickerResult? result = await FilePicker.platform
             .pickFiles(type: FileType.custom, allowedExtensions: ['svg']);
         Uint8List fileBytes = result!.files.first.bytes!;
-        setState(() {
-          userHasPickedFile = true;
-          pickedFileName = result.files.first.name;
-          pickedFile = fileBytes;
-        });
+        fallbackValidator(pickedFileName, '.svg')
+            ? setState(() {
+                userHasPickedFile = true;
+                pickedFileName = result.files.first.name;
+                pickedFile = fileBytes;
+              })
+            : buildErrorSnackbar(context, "Looks like this file isn't an svg!");
         return fileBytes;
       } on Error {
         print(Error);
