@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 class Footer extends StatelessWidget {
   final BoxConstraints constraints;
 
-  // Proper constructor naming convention in Dart is capitalized
   const Footer({super.key, required this.constraints});
 
   bool get isDesktop => constraints.maxWidth > 900;
@@ -169,9 +168,7 @@ class _FooterLink extends StatelessWidget {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTap: () {
-            // Add navigation logic here
-          },
+          onTap: () {},
           child: Text(
             text,
             style: GoogleFonts.ubuntu(
