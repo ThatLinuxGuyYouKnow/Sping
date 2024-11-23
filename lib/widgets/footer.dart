@@ -23,12 +23,11 @@ class Footer extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                html.window.open(
-                    "https://github.com/ThatLinuxGuyYouKnow?tab=repositories",
-                    "Theos message to you");
+                html.window
+                    .open("https://github.com/ThatLinuxGuyYouKnow", "A friend");
               },
               child: Text(
-                'ThatLinuxGuyYouKnow',
+                'ThatLinuxGuyYouKnow(Alabi Ayobami)',
                 style: GoogleFonts.ubuntu(
                     decoration: TextDecoration.underline,
                     decorationColor:

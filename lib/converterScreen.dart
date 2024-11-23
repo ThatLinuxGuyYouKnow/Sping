@@ -53,6 +53,14 @@ class _ConverterScreenState extends State<ConverterScreen> {
     print('Selected scale in ConverterScreen: $selectedScale');
   }
 
+  bool fallbackValidator(String filename, String validFileExtension) {
+    if (filename.contains(validFileExtension)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     pickImage() async {
