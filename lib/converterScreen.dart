@@ -187,7 +187,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.cancel,
-                                                color: Colors.redAccent,
+                                                color: Colors.black,
                                               ),
                                               onPressed: () {
                                                 setState(() {
