@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _flutterAppIconsPlugin = FlutterAppIcons();
-    _flutterAppIconsPlugin.setIcon(icon: 'favicon.png');
+    _flutterAppIconsPlugin.setIcon(
+        icon:
+            'favicon.png'); //REMINDER: FIXED FAVICON ISSUE ON NETLFIY BY MAUALLY CHANGING IT IN WEB/
     return MaterialApp(
         title: "SPING: SVG to PNG converter",
         theme: ThemeData(
