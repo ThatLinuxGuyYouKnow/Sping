@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/logic/converter.dart';
+import 'package:sping/logic/pngTosvgConverter.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({super.key});
@@ -331,7 +332,9 @@ class ResponsiveAppBar extends StatelessWidget {
         ),
         if (isDesktop)
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              launchUrlToSite();
+            },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
