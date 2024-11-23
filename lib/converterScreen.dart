@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/logic/converter.dart';
 import 'package:sping/logic/pngTosvgConverter.dart';
+import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/widgets/scaleSelector.dart';
 
 class ConverterScreen extends StatefulWidget {
@@ -20,8 +21,36 @@ class _ConverterScreenState extends State<ConverterScreen> {
   bool uploadBoxInFocus = false;
   bool userHasPickedFile = false;
   late String pickedFileName;
-  late PlatformFile pickedFile;
+  late Uint8List pickedFile;
   late String pngURL;
+  Scale selectedScale = Scale.same;
+
+  String getScaleDimension(Scale scale) {
+    print(scale);
+    switch (scale) {
+      case Scale.same:
+        print('500');
+        return '500'; // 1x
+      case Scale.large:
+        print('1000');
+        return '1000'; // 2x
+      case Scale.larger:
+        print('3000');
+        return '3000'; // 6x
+      case Scale.largest:
+        print('6000');
+        return '6000'; // 12x
+      default:
+        return '500';
+    }
+  }
+
+  void handleScaleSelected(Scale scale) {
+    setState(() {
+      selectedScale = scale;
+    });
+    print('Selected scale in ConverterScreen: $selectedScale');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +62,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
         setState(() {
           userHasPickedFile = true;
           pickedFileName = result.files.first.name;
+          pickedFile = fileBytes;
         });
         return fileBytes;
       } on Error {
@@ -101,28 +131,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   : () async {
                                       print('Hit Gesture Detector');
 
-                                      final selectedFile = await pickImage();
-
-                                      if (selectedFile != null) {
-                                        // Read file content as string (SVG content)
-                                        final svgContent =
-                                            utf8.decode(selectedFile);
-
-                                        final converter = SvgToPngConverter(
-                                          svgContent: svgContent,
-                                          scaleWidth:
-                                              '500', // Optional, can adjust dynamically
-                                          scaleHeight: '500',
-                                        );
-
-                                        setState(() async {
-                                          pngURL = await converter
-                                              .convertSvgToPng(); // Ensure it's awaited
-                                        });
-                                      } else {
-                                        print(
-                                            'No file was selected or an error occurred.');
-                                      }
+                                      await pickImage();
                                     },
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.click,
@@ -269,7 +278,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                           child: SizedBox(
                                             width: containerWidth * 0.8,
                                             child: ScaleSelector(
-                                              onScaleSelected: (scale) {},
+                                              initialScale:
+                                                  selectedScale, // Pass the initial scale
+                                              onScaleSelected:
+                                                  handleScaleSelected,
                                             ),
                                           ),
                                         ),
@@ -280,46 +292,58 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                     height: 80,
                                   ),
                             Center(
-                              child: GestureDetector(
-                                onTap: () {
+                                child: GestureDetector(
+                              onTap: () async {
+                                if (userHasPickedFile) {
+                                  final svgContent = utf8.decode(pickedFile);
                                   final converter = SvgToPngConverter(
-                                      svgContent:
-                                          ''); // dummy svg data, doesnt matter since itll never be accessed
+                                    svgContent: svgContent,
+                                    scaleWidth:
+                                        getScaleDimension(selectedScale),
+                                    scaleHeight:
+                                        getScaleDimension(selectedScale),
+                                  );
+                                  String url =
+                                      await converter.convertSvgToPng();
+                                  setState(() {
+                                    pngURL = url;
+                                  });
+
                                   converter.downloadPng(pngURL);
-                                },
-                                child: Container(
-                                  width: isDesktop
-                                      ? containerWidth * 0.8
-                                      : containerWidth * 0.9,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: userHasPickedFile
-                                        ? Colors.black
-                                        : Colors.grey.shade400,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Convert to SVG',
-                                        style: GoogleFonts.ubuntu(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      const Icon(
-                                        Icons.arrow_forward,
+                                }
+                              },
+                              child: Container(
+                                width: isDesktop
+                                    ? containerWidth * 0.8
+                                    : containerWidth * 0.9,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: userHasPickedFile
+                                      ? Colors.black
+                                      : Colors.grey.shade400,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Convert to PNG', // Updated text to match functionality
+                                      style: GoogleFonts.ubuntu(
                                         color: Colors.white,
-                                        size: 20,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
+                            )),
                           ],
                         ),
                       ),

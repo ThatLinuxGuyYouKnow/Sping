@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/model/scaleEnums.dart';
 
 class ScaleSelector extends StatefulWidget {
-  final Function(Scale)? onScaleSelected;
+  final Function(Scale) onScaleSelected;
+  final Scale initialScale;
 
   const ScaleSelector({
     super.key,
-    this.onScaleSelected,
+    required this.onScaleSelected,
+    required this.initialScale,
   });
 
   @override
@@ -15,7 +17,13 @@ class ScaleSelector extends StatefulWidget {
 }
 
 class _ScaleSelectorState extends State<ScaleSelector> {
-  Scale selectedScale = Scale.same;
+  late Scale selectedScale;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedScale = widget.initialScale;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +41,26 @@ class _ScaleSelectorState extends State<ScaleSelector> {
       ),
       child: SegmentedButton<Scale>(
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.resolveWith<Color>(
-            (Set<WidgetState> states) {
-              if (states.contains(WidgetState.selected)) {
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
                 return Colors.black;
               }
               return Colors.white;
             },
           ),
-          foregroundColor: WidgetStateProperty.resolveWith<Color>(
-            (Set<WidgetState> states) {
-              if (states.contains(WidgetState.selected)) {
+          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
                 return Colors.white;
               }
               return Colors.black87;
             },
           ),
-          side: WidgetStateProperty.all(
+          side: MaterialStateProperty.all(
             BorderSide(color: Colors.grey.shade200),
           ),
-          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -69,9 +77,7 @@ class _ScaleSelectorState extends State<ScaleSelector> {
           setState(() {
             selectedScale = selection.first;
           });
-          if (widget.onScaleSelected != null) {
-            widget.onScaleSelected!(selection.first);
-          }
+          widget.onScaleSelected(selection.first);
         },
       ),
     );
