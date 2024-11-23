@@ -347,7 +347,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                 ),
                               ),
                             )),
-                            const SizedBox(height: 200),
                           ],
                         ),
                       ),
