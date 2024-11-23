@@ -8,22 +8,28 @@ class Footer extends StatelessWidget {
     return Container(
       color: Colors.black,
       width: constraints.maxWidth,
-      height: 80,
+      height: 70,
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Made with ❤️ by',
               style: GoogleFonts.ubuntu(color: Colors.white),
             ),
             SizedBox(
-              width: 20,
+              width: 10,
             ),
-            Text(
-              'ThatLinuxGuyYouKnow',
-              style: GoogleFonts.ubuntu(
-                  decoration: TextDecoration.underline, color: Colors.white),
+            GestureDetector(
+              onTap: () {},
+              child: Text(
+                'ThatLinuxGuyYouKnow',
+                style: GoogleFonts.ubuntu(
+                    decoration: TextDecoration.underline,
+                    decorationColor:
+                        Colors.white, // This makes the underline white
+                    color: Colors.white),
+              ),
             )
           ],
         ),
