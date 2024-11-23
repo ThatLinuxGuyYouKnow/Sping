@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/logic/converter.dart';
 import 'package:sping/logic/pngTosvgConverter.dart';
+import 'package:sping/widgets/scaleSelector.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({super.key});
@@ -250,7 +252,33 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       ),
                               ),
                             ),
-                            SizedBox(height: userHasPickedFile ? 120 : 60),
+                            userHasPickedFile
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 50),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Scale Factor',
+                                          style: GoogleFonts.ubuntu(),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Center(
+                                          child: SizedBox(
+                                            width: containerWidth * 0.8,
+                                            child: ScaleSelector(
+                                              onScaleSelected: (scale) {},
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: 80,
+                                  ),
                             Center(
                               child: GestureDetector(
                                 onTap: () {

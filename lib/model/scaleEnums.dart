@@ -1,3 +1,1 @@
-enum Scale {
-  small200,
-}
+enum Scale { same, large, larger, largest }
