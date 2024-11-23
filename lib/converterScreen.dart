@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/logic/converter.dart';
 import 'package:sping/logic/pngTosvgConverter.dart';
 import 'package:sping/model/scaleEnums.dart';
+import 'package:sping/widgets/footer.dart';
 import 'package:sping/widgets/scaleSelector.dart';
 
 class ConverterScreen extends StatefulWidget {
@@ -356,36 +357,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
               ),
             ),
           ),
+          bottomSheet: Footer(constraints: constraints),
         );
       },
-    );
-  }
-}
-
-class _FooterLink extends StatelessWidget {
-  final String text;
-
-  const _FooterLink(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () {
-            // Add navigation logic here
-          },
-          child: Text(
-            text,
-            style: GoogleFonts.ubuntu(
-              color: Colors.grey[400],
-              fontSize: 14,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
