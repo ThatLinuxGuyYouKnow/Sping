@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:html' as html;
 
 class Footer extends StatelessWidget {
   final BoxConstraints constraints;
@@ -21,7 +22,11 @@ class Footer extends StatelessWidget {
               width: 10,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                html.window.open(
+                    "https://github.com/ThatLinuxGuyYouKnow?tab=repositories",
+                    "Theos message to you");
+              },
               child: Text(
                 'ThatLinuxGuyYouKnow',
                 style: GoogleFonts.ubuntu(
