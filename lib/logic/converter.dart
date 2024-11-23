@@ -7,25 +7,24 @@ class SvgToPngConverter {
   final String svgContent;
   final String? scaleHeight;
   final String? scaleWidth;
-  SvgToPngConverter(this.svgContent, this.scaleHeight, this.scaleWidth);
 
-  Future<void> convertSvgToPng() async {
+  SvgToPngConverter({
+    required this.svgContent,
+    this.scaleHeight,
+    this.scaleWidth,
+  });
+
+  convertSvgToPng() async {
     try {
-      // Create an SVG element in the browser
-      final svgElement = html.ImageElement();
-      // Set explicit dimensions if not already set
-      svgElement.style.width = scaleWidth;
-      svgElement.style.height = scaleHeight;
-
       // Create a canvas element with appropriate dimensions
       final canvasElement = html.CanvasElement(
-        width: svgElement.clientWidth ?? 500,
-        height: svgElement.clientHeight ?? 500,
+        width: int.tryParse(scaleWidth ?? '500') ?? 500,
+        height: int.tryParse(scaleHeight ?? '500') ?? 500,
       );
       final context = canvasElement.context2D;
 
       // Draw SVG onto the canvas
-      final image = await _svgToImage(svgElement);
+      final image = await _svgToImage();
       context.drawImageScaled(
         image,
         0,
@@ -38,13 +37,13 @@ class SvgToPngConverter {
       final pngDataUrl = canvasElement.toDataUrl('image/png');
 
       // Trigger a download in the browser
-      _downloadPng(pngDataUrl);
+      return pngDataUrl;
     } catch (e) {
       print('Conversion error: $e');
     }
   }
 
-  Future<html.ImageElement> _svgToImage(html.ImageElement svgElement) async {
+  Future<html.ImageElement> _svgToImage() async {
     final completer = Completer<html.ImageElement>();
     final img = html.ImageElement();
 
@@ -53,13 +52,13 @@ class SvgToPngConverter {
 
     // Convert SVG to data URL
     final svgDataUrl =
-        'data:image/svg+xml;base64,${base64Encode(utf8.encode(svgElement.outerHtml!))}';
+        'data:image/svg+xml;base64,${base64Encode(utf8.encode(svgContent))}';
     img.src = svgDataUrl;
 
     return completer.future;
   }
 
-  void _downloadPng(String pngDataUrl) {
+  void downloadPng(String pngDataUrl) {
     final anchor = html.AnchorElement(href: pngDataUrl)
       ..target = 'blank'
       ..download = 'converted_image.png';
