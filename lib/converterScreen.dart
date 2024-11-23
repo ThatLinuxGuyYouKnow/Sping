@@ -278,6 +278,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                           child: SizedBox(
                                             width: containerWidth * 0.8,
                                             child: ScaleSelector(
+                                              isSmallScreen:
+                                                  !isDesktop && !isTablet,
                                               initialScale:
                                                   selectedScale, // Pass the initial scale
                                               onScaleSelected:

@@ -5,11 +5,13 @@ import 'package:sping/model/scaleEnums.dart';
 class ScaleSelector extends StatefulWidget {
   final Function(Scale) onScaleSelected;
   final Scale initialScale;
+  final bool isSmallScreen;
 
   const ScaleSelector({
     super.key,
     required this.onScaleSelected,
     required this.initialScale,
+    required this.isSmallScreen,
   });
 
   @override
@@ -28,7 +30,7 @@ class _ScaleSelectorState extends State<ScaleSelector> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 46,
+      height: widget.isSmallScreen ? 40 : 46,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
@@ -65,12 +67,38 @@ class _ScaleSelectorState extends State<ScaleSelector> {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
+          // Add padding adjustment for small screens
+          padding: MaterialStateProperty.all(widget.isSmallScreen
+              ? const EdgeInsets.symmetric(horizontal: 4)
+              : const EdgeInsets.symmetric(horizontal: 8)),
+          // Adjust the minimum size
+          minimumSize: MaterialStateProperty.all(
+              widget.isSmallScreen ? const Size(40, 32) : const Size(48, 40)),
+          maximumSize: MaterialStateProperty.all(
+              widget.isSmallScreen ? const Size(60, 32) : const Size(80, 40)),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         segments: [
-          ScaleSegment(scale: Scale.same, label: '1x'),
-          ScaleSegment(scale: Scale.large, label: '2x'),
-          ScaleSegment(scale: Scale.larger, label: '6x'),
-          ScaleSegment(scale: Scale.largest, label: '12x'),
+          ScaleSegment(
+            scale: Scale.same,
+            label: '1x',
+            isSmallScreen: widget.isSmallScreen,
+          ),
+          ScaleSegment(
+            scale: Scale.large,
+            label: '2x',
+            isSmallScreen: widget.isSmallScreen,
+          ),
+          ScaleSegment(
+            scale: Scale.larger,
+            label: '6x',
+            isSmallScreen: widget.isSmallScreen,
+          ),
+          ScaleSegment(
+            scale: Scale.largest,
+            label: '12x',
+            isSmallScreen: widget.isSmallScreen,
+          ),
         ],
         selected: {selectedScale},
         onSelectionChanged: (Set<Scale> selection) {
@@ -86,15 +114,24 @@ class _ScaleSelectorState extends State<ScaleSelector> {
 
 class ScaleSegment extends ButtonSegment<Scale> {
   ScaleSegment({
+    required bool isSmallScreen,
     required Scale scale,
     required String label,
   }) : super(
           value: scale,
-          label: Text(
-            label,
-            style: GoogleFonts.ubuntu(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+          label: Container(
+            constraints: BoxConstraints(
+              maxWidth: isSmallScreen ? 40 : 60,
+            ),
+            child: Text(
+              label,
+              style: GoogleFonts.ubuntu(
+                fontSize: isSmallScreen ? 12 : 14,
+                fontWeight: isSmallScreen ? FontWeight.w400 : FontWeight.w600,
+                height: 1, // Reduce line height
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
             ),
           ),
         );
