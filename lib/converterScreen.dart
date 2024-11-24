@@ -387,6 +387,10 @@ class ResponsiveAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Image(image: AssetImage('logo.jpg')),
+        SizedBox(
+          width: 8,
+        ),
         Expanded(
           child: Text(
             ' SVG To PNG Converter',

@@ -1,16 +1,10 @@
-# sping
+# Sping
 
-A new Flutter project.
+## An SVG to PNG conversion tool, all the magic happens in your browser!
 
-## Getting Started
+I built this after getting inspiration from Theo Browne's version [here](https://github.com/t3dotgg/quickpic)
 
-This project is a starting point for a Flutter application.
+<img alt="" src="https://img.shields.io/badge/Flutter-0000FF.svg?&style=for-the-badge&logo=Flutter&logoColor=white" />
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
