@@ -33,17 +33,19 @@ Designed with responsiveness in mind, Sping adapts beautifully to desktop, table
 
 Built With
 <img alt="Flutter Badge" src="https://img.shields.io/badge/Flutter-0000FF.svg?&style=for-the-badge&logo=Flutter&logoColor=white" />
-    Flutter 
-
+   
 
 
 ## Development & Contribution
 
 ### Running Locally
 
-    Clone the repository:
+Clone the repository:
 ```
  git clone https://github.com/your-username/sping.git
+```
+
+```
  cd sping
 ```
 
