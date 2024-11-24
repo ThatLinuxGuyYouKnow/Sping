@@ -22,7 +22,7 @@ class ConverterScreen extends StatefulWidget {
 class _ConverterScreenState extends State<ConverterScreen> {
   bool uploadBoxInFocus = false;
   bool userHasPickedFile = false;
-  late String pickedFileName;
+  String? pickedFileName;
   late Uint8List pickedFile;
   late String pngURL;
   Scale selectedScale = Scale.same;
@@ -69,16 +69,23 @@ class _ConverterScreenState extends State<ConverterScreen> {
         FilePickerResult? result = await FilePicker.platform
             .pickFiles(type: FileType.custom, allowedExtensions: ['svg']);
         Uint8List fileBytes = result!.files.first.bytes!;
-        fallbackValidator(pickedFileName, '.svg')
+        setState(() {
+          pickedFileName = result.files.first.name;
+        });
+        fallbackValidator(pickedFileName!, '.svg')
             ? setState(() {
                 userHasPickedFile = true;
-                pickedFileName = result.files.first.name;
+
                 pickedFile = fileBytes;
               })
-            : buildErrorSnackbar(context, "Looks like this file isn't an svg!");
+            : () {
+                print(pickedFileName);
+                buildErrorSnackbar(
+                    context, "Looks like this file isn't an svg!");
+              };
         return fileBytes;
-      } on Error {
-        print(Error);
+      } catch (error) {
+        print('file pciker error' + error.toString());
       }
     }
 
@@ -186,7 +193,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                             const SizedBox(width: 12),
                                             Expanded(
                                               child: Text(
-                                                pickedFileName,
+                                                pickedFileName!,
                                                 style: GoogleFonts.ubuntu(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500,
