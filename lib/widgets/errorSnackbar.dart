@@ -4,7 +4,7 @@ void buildErrorSnackbar(context, String errorText) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(errorText),
-      behavior: SnackBarBehavior.floating,
+      behavior: SnackBarBehavior.fixed,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
