@@ -275,7 +275,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                             ),
                             userHasPickedFile
                                 ? Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 50),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 50),
                                     child: Column(
                                       children: [
                                         Text(
@@ -283,7 +284,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                           style: GoogleFonts.ubuntu(),
                                           textAlign: TextAlign.start,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 30,
                                         ),
                                         Center(
@@ -302,7 +303,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       ],
                                     ),
                                   )
-                                : SizedBox(
+                                : const SizedBox(
                                     height: 80,
                                   ),
                             Center(
@@ -387,8 +388,8 @@ class ResponsiveAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image(image: AssetImage('logo.jpg')),
-        SizedBox(
+        const Image(image: AssetImage('logo.jpg')),
+        const SizedBox(
           width: 8,
         ),
         Expanded(
