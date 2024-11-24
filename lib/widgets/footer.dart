@@ -13,7 +13,7 @@ class Footer extends StatelessWidget {
       height: 70,
       child: Padding(
         padding: isSmallScreen
-            ? EdgeInsets.symmetric(horizontal: 3)
+            ? EdgeInsets.symmetric(horizontal: 8)
             : EdgeInsets.all(0),
         child: Center(
           child: Row(
