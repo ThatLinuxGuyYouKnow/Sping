@@ -7,7 +7,7 @@ All the magic happens in your browser!
 
 Sping is a lightweight, user-friendly tool for converting SVG files into high-quality PNG images directly in your browser. It supports customizable scaling options, ensuring your converted images are perfect for whatever use case.
 
-Inspired by Theo Browne’s [QuickPic]((https://github.com/t3dotgg/quickpic)), Sping was built to bring similar functionality with a personal twist, all powered by Flutter.
+Inspired by Theo Browne’s [QuickPic](https://github.com/t3dotgg/quickpic), Sping was built to bring similar functionality with a personal twist, all powered by Flutter.
 
 ## Features
 
