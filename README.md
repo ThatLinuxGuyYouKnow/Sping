@@ -1,11 +1,11 @@
 # Sping
-## SVG to PNG Conversion Tool
+## SVG to PNG Conversion Tool, Built With <img alt="Flutter Badge" src="https://img.shields.io/badge/Flutter-0000FF.svg?&style=for-the-badge&logo=Flutter&logoColor=white" />
 
 All the magic happens in your browser!
 
 [Try it here! 🚀](https://sping.netlify.app)
 
-Sping is a lightweight, user-friendly tool for converting SVG files into high-quality PNG images directly in your browser. It supports customizable scaling options, ensuring your converted images are perfect for any use case—from web design to print media.
+Sping is a lightweight, user-friendly tool for converting SVG files into high-quality PNG images directly in your browser. It supports customizable scaling options, ensuring your converted images are perfect for whatever use case.
 
 Inspired by Theo Browne’s [QuickPic]((https://github.com/t3dotgg/quickpic)), Sping was built to bring similar functionality with a personal twist, all powered by Flutter.
 
@@ -31,9 +31,6 @@ Designed with responsiveness in mind, Sping adapts beautifully to desktop, table
 - Choose a scaling option (1x, 2x, 6x, or 12x).
 - Click Convert to PNG and download your file instantly.
 
-Built With
-<img alt="Flutter Badge" src="https://img.shields.io/badge/Flutter-0000FF.svg?&style=for-the-badge&logo=Flutter&logoColor=white" />
-   
 
 
 ## Development & Contribution
@@ -42,7 +39,7 @@ Built With
 
 Clone the repository:
 ```
- git clone https://github.com/your-username/sping.git
+ git clone https://github.com/ThatLinuxGuyYouKnow/sping.git
 ```
 
 ```
