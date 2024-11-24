@@ -368,7 +368,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
               ),
             ),
           ),
-          bottomSheet: Footer(constraints: constraints),
+          bottomSheet: Footer(
+            constraints: constraints,
+            isSmallScreen: !isDesktop && !isTablet,
+          ),
         );
       },
     );
@@ -388,7 +391,7 @@ class ResponsiveAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Image(image: AssetImage('logo.jpg')),
+        const Image(image: AssetImage('assets/logo.jpg')),
         const SizedBox(
           width: 8,
         ),
