@@ -66,26 +66,27 @@ class _ConverterScreenState extends State<ConverterScreen> {
   Widget build(BuildContext context) {
     pickImage() async {
       try {
-        FilePickerResult? result = await FilePicker.platform
-            .pickFiles(type: FileType.custom, allowedExtensions: ['svg']);
-        Uint8List fileBytes = result!.files.first.bytes!;
-        setState(() {
-          pickedFileName = result.files.first.name;
-        });
-        fallbackValidator(pickedFileName!, '.svg')
-            ? setState(() {
-                userHasPickedFile = true;
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['svg'],
+        );
 
-                pickedFile = fileBytes;
-              })
-            : () {
-                print(pickedFileName);
-                buildErrorSnackbar(
-                    context, "Looks like this file isn't an svg!");
-              };
-        return fileBytes;
+        if (result != null) {
+          Uint8List fileBytes = result.files.first.bytes!;
+          String fileName = result.files.first.name;
+
+          if (fallbackValidator(fileName, '.svg')) {
+            setState(() {
+              userHasPickedFile = true;
+              pickedFile = fileBytes;
+              pickedFileName = fileName;
+            });
+          } else {
+            buildErrorSnackbar(context, "Looks like this file isn't an SVG!");
+          }
+        }
       } catch (error) {
-        print('file pciker error' + error.toString());
+        print('File picker error: $error');
       }
     }
 
