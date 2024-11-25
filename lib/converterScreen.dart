@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sping/logic/converter.dart';
 import 'package:sping/logic/pngTosvgConverter.dart';
+import 'package:sping/model/dimensions.dart';
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
 import 'package:sping/widgets/footer.dart';
@@ -27,23 +28,20 @@ class _ConverterScreenState extends State<ConverterScreen> {
   late String pngURL;
   Scale selectedScale = Scale.same;
 
-  getScaleDimensionHeight(
-      {required Scale scale,
-      required int originalWidth,
-      required int originalHeight}) {
-    print(scale);
+  int getScaleDimension({
+    required Scale scale,
+  }) {
     switch (scale) {
       case Scale.same:
-        return Dimensions(
-            width: originalWidth.toString(), height: originalHeight.toString());
+        return 1;
       case Scale.large:
-        return '1000'; // 2x
+        return 2;
       case Scale.larger:
-        return '3000'; // 6x
+        return 6; // 6x
       case Scale.largest:
-        return '6000'; // 12x
+        return 12; // 12x
       default:
-        return '500';
+        return 1;
     }
   }
 
@@ -322,9 +320,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   final converter = SvgToPngConverter(
                                     svgContent: svgContent,
                                     scaleWidth:
-                                        getScaleDimension(selectedScale),
+                                        getScaleDimension(scale: selectedScale),
                                     scaleHeight:
-                                        getScaleDimension(selectedScale),
+                                        getScaleDimension(scale: selectedScale),
                                   );
                                   String url =
                                       await converter.convertSvgToPng();
@@ -441,11 +439,4 @@ class ResponsiveAppBar extends StatelessWidget {
       ],
     );
   }
-}
-
-class Dimensions {
-  final String width;
-  final String height;
-
-  Dimensions({required this.width, required this.height});
 }

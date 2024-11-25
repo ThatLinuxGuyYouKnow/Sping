@@ -72,7 +72,7 @@ class SvgToPngConverter {
     }
   }
 
-  Future<html.ImageElement> _svgToImage() async {
+  Future<html.ImageElement> _svgToImage({required int scale}) async {
     final completer = Completer<html.ImageElement>();
     final img = html.ImageElement();
 
