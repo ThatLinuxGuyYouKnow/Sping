@@ -27,7 +27,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
   late String pngURL;
   Scale selectedScale = Scale.same;
 
-  String getScaleDimension(Scale scale) {
+  String getScaleDimension(
+      {required Scale scale,
+      required int originalWidth,
+      required int originalHeight}) {
     print(scale);
     switch (scale) {
       case Scale.same:
