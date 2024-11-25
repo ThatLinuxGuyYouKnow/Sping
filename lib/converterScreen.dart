@@ -34,16 +34,12 @@ class _ConverterScreenState extends State<ConverterScreen> {
     print(scale);
     switch (scale) {
       case Scale.same:
-        print('500');
         return '500'; // 1x
       case Scale.large:
-        print('1000');
         return '1000'; // 2x
       case Scale.larger:
-        print('3000');
         return '3000'; // 6x
       case Scale.largest:
-        print('6000');
         return '6000'; // 12x
       default:
         return '500';
