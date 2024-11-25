@@ -27,14 +27,15 @@ class _ConverterScreenState extends State<ConverterScreen> {
   late String pngURL;
   Scale selectedScale = Scale.same;
 
-  String getScaleDimensionHeight(
+  getScaleDimensionHeight(
       {required Scale scale,
       required int originalWidth,
       required int originalHeight}) {
     print(scale);
     switch (scale) {
       case Scale.same:
-        return originalWidth:originalHeight; 
+        return Dimensions(
+            width: originalWidth.toString(), height: originalHeight.toString());
       case Scale.large:
         return '1000'; // 2x
       case Scale.larger:
@@ -441,6 +442,7 @@ class ResponsiveAppBar extends StatelessWidget {
     );
   }
 }
+
 class Dimensions {
   final String width;
   final String height;

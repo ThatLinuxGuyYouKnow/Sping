@@ -4,8 +4,8 @@ import 'dart:html' as html;
 
 class SvgToPngConverter {
   final String svgContent;
-  final String? scaleHeight;
-  final String? scaleWidth;
+  final int? scaleHeight;
+  final int? scaleWidth;
 
   SvgToPngConverter({
     required this.svgContent,
@@ -18,8 +18,8 @@ class SvgToPngConverter {
       print('Converting with dimensions: ${scaleWidth}x${scaleHeight}');
 
       // Parse dimensions with fallback to 500
-      final width = int.tryParse(scaleWidth!);
-      final height = int.tryParse(scaleHeight!);
+      final width = int.tryParse(scaleWidth.toString()!);
+      final height = int.tryParse(scaleHeight.toString());
 
       print('Parsed dimensions: ${width}x${height}');
 
