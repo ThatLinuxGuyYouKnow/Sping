@@ -4,48 +4,60 @@ import 'dart:html' as html;
 
 class SvgToPngConverter {
   final String svgContent;
-  final int? scaleHeight;
-  final int? scaleWidth;
+  final int? scaleWidthBy;
+  final int? scaleHeightBy;
 
   SvgToPngConverter({
     required this.svgContent,
-    this.scaleHeight,
-    this.scaleWidth,
+    this.scaleWidthBy,
+    this.scaleHeightBy,
   });
 
   Future<String> convertSvgToPng() async {
     try {
-      print('Converting with dimensions: ${scaleWidth}x${scaleHeight}');
+      // Load the SVG image to get original dimensions
+      final image = await _svgToImage();
 
-      // Parse dimensions with fallback to 500
-      final width = int.tryParse(scaleWidth.toString()!);
-      final height = int.tryParse(scaleHeight.toString());
+      // Get original dimensions
+      final originalWidth = image.naturalWidth;
+      final originalHeight = image.naturalHeight;
 
-      print('Parsed dimensions: ${width}x${height}');
+      // Calculate scaled dimensions
+      final width = scaleWidthBy != null
+          ? (originalWidth * scaleWidthBy!).toInt()
+          : originalWidth;
+      final height = scaleHeightBy != null
+          ? (originalHeight * scaleHeightBy!).toInt()
+          : originalHeight;
 
-      // Create canvas with specified dimensions
+      print('Original dimensions: $originalWidth x $originalHeight');
+      print('Scaled dimensions: $width x $height');
+
+      // Create canvas with scaled dimensions
       final canvasElement = html.CanvasElement(
         width: width,
         height: height,
       );
-
       final context = canvasElement.context2D;
 
       // Clear the canvas first
-      context.clearRect(0, 0, width!, height!);
+      context.clearRect(0, 0, width, height);
 
-      // Load and scale the SVG image
-      final image = await _svgToImage();
+      // Calculate aspect ratio and scaling
+      final svgAspectRatio = originalWidth / originalHeight;
+      final canvasAspectRatio = width / height;
 
-      // Calculate scaling factors to maintain aspect ratio
-      final aspectRatio = image.naturalWidth / image.naturalHeight;
-      double scaledWidth = width.toDouble();
-      double scaledHeight = height.toDouble();
+      double scaledWidth, scaledHeight;
 
-      if (width / height > aspectRatio) {
-        scaledWidth = height * aspectRatio;
+      // Determine scaling strategy to maintain aspect ratio
+      if (canvasAspectRatio > svgAspectRatio) {
+        // Canvas is wider relative to its height
+        scaledHeight = height.toDouble();
+        scaledWidth = height * svgAspectRatio;
       } else {
-        scaledHeight = width / aspectRatio;
+        // Canvas is taller relative to its width
+        scaledWidth = width.toDouble();
+        scaledHeight = width / svgAspectRatio;
       }
 
       // Center the image on the canvas
@@ -63,7 +75,6 @@ class SvgToPngConverter {
 
       // Convert to PNG with maximum quality
       final pngDataUrl = canvasElement.toDataUrl('image/png', 1.0);
-
       print('Conversion completed. Data URL length: ${pngDataUrl.length}');
       return pngDataUrl;
     } catch (e) {
@@ -72,7 +83,7 @@ class SvgToPngConverter {
     }
   }
 
-  Future<html.ImageElement> _svgToImage({required int scale}) async {
+  Future<html.ImageElement> _svgToImage() async {
     final completer = Completer<html.ImageElement>();
     final img = html.ImageElement();
 
@@ -82,7 +93,6 @@ class SvgToPngConverter {
           'SVG loaded successfully. Natural dimensions: ${img.naturalWidth}x${img.naturalHeight}');
       completer.complete(img);
     });
-
     img.onError.listen((error) {
       print('SVG load error: $error');
       completer.completeError('Image load error');

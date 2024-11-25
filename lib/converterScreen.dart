@@ -295,16 +295,14 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         ),
                                         Center(
                                           child: SizedBox(
-                                            width: containerWidth * 0.8,
-                                            child: ScaleSelector(
-                                              isSmallScreen:
-                                                  !isDesktop && !isTablet,
-                                              initialScale:
-                                                  selectedScale, // Pass the initial scale
-                                              onScaleSelected:
-                                                  handleScaleSelected,
-                                            ),
-                                          ),
+                                              width: containerWidth * 0.8,
+                                              child: ScaleSelector(
+                                                  isSmallScreen:
+                                                      !isDesktop && !isTablet,
+                                                  initialScale:
+                                                      selectedScale, // Pass the initial scale
+                                                  onScaleSelected:
+                                                      handleScaleSelected)),
                                         ),
                                       ],
                                     ),
@@ -319,9 +317,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   final svgContent = utf8.decode(pickedFile);
                                   final converter = SvgToPngConverter(
                                     svgContent: svgContent,
-                                    scaleWidth:
+                                    scaleWidthBy:
                                         getScaleDimension(scale: selectedScale),
-                                    scaleHeight:
+                                    scaleHeightBy:
                                         getScaleDimension(scale: selectedScale),
                                   );
                                   String url =
