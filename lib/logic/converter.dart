@@ -116,7 +116,7 @@ class SvgToPngConverter {
     return completer.future;
   }
 
-  void downloadPng(String pngDataUrl) {
+  void downloadPng(String pngDataUrl, int scale) {
     final anchor = html.AnchorElement(href: pngDataUrl)
       ..target = 'blank'
       ..download = 'converted_image.png';

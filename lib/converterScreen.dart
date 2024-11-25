@@ -328,7 +328,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                     pngURL = url;
                                   });
 
-                                  converter.downloadPng(pngURL);
+                                  converter.downloadPng(pngURL,
+                                      getScaleDimension(scale: selectedScale));
                                 }
                               },
                               child: Container(
