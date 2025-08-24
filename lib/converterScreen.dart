@@ -11,6 +11,7 @@ import 'package:sping/model/dimensions.dart';
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
 import 'package:sping/widgets/footer.dart';
+import 'package:sping/widgets/outputFormatSelector.dart';
 import 'package:sping/widgets/scaleSelector.dart';
 
 class ConverterScreen extends StatefulWidget {
@@ -307,9 +308,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       ],
                                     ),
                                   )
-                                : const SizedBox(
-                                    height: 80,
-                                  ),
+                                : OutputFormatSelector(),
                             Center(
                                 child: GestureDetector(
                               onTap: () async {
