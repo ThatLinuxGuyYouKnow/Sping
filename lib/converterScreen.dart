@@ -9,6 +9,7 @@ import 'package:sping/utils/converter.dart';
 import 'package:sping/utils/pngTosvgConverter.dart';
 import 'package:sping/model/dimensions.dart';
 import 'package:sping/model/scaleEnums.dart';
+import 'package:sping/widgets/%60appBar.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
 import 'package:sping/widgets/footer.dart';
 import 'package:sping/widgets/outputFormatSelector.dart';
@@ -124,8 +125,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                     Container(
                       width: containerWidth,
                       constraints: const BoxConstraints(
-                        minHeight: 450,
-                        maxHeight: 650,
+                        minHeight: 380,
+                        maxHeight: 380,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
@@ -139,7 +140,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Upload SVG File',
+                              'Upload Image File',
                               style: GoogleFonts.ubuntu(
                                 fontSize: isDesktop ? 20 : 18,
                                 fontWeight: FontWeight.w500,
@@ -285,33 +286,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: userHasPickedFile
-                                  ? Column(
-                                      children: [
-                                        Text(
-                                          'Scale Factor',
-                                          style: GoogleFonts.ubuntu(),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        Center(
-                                          child: SizedBox(
-                                              width: containerWidth * 0.8,
-                                              child: ScaleSelector(
-                                                  isSmallScreen:
-                                                      !isDesktop && !isTablet,
-                                                  initialScale:
-                                                      selectedScale, // Pass the initial scale
-                                                  onScaleSelected:
-                                                      handleScaleSelected)),
-                                        ),
-                                      ],
-                                    )
-                                  : const OutputFormatSelector(
-                                      originalImageFormat: '',
-                                    ),
                             ),
                             Center(
                                 child: GestureDetector(
@@ -382,63 +356,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class ResponsiveAppBar extends StatelessWidget {
-  final bool isDesktop;
-
-  const ResponsiveAppBar({
-    super.key,
-    required this.isDesktop,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Image(image: AssetImage('assets/logo.jpg')),
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(
-          child: Text(
-            ' SVG To PNG Converter',
-            style: GoogleFonts.ubuntu(
-              color: Colors.white,
-              fontSize: isDesktop ? 32 : 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        if (isDesktop)
-          ElevatedButton(
-            onPressed: () {
-              launchUrlToSite();
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Icon(
-                    Icons.sync_alt,
-                    color: Colors.black,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Convert PNG to SVG here',
-                    style:
-                        GoogleFonts.ubuntu(fontSize: 16, color: Colors.black),
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
     );
   }
 }
