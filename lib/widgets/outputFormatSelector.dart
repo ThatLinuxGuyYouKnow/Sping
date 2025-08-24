@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sping/widgets/formatTabs.dart';
 
-class OutputFormatSelector extends StatelessWidget {
+class OutputFormatSelector extends StatefulWidget {
   const OutputFormatSelector({super.key});
 
+  @override
+  State<OutputFormatSelector> createState() => _OutputFormatSelectorState();
+}
+
+class _OutputFormatSelectorState extends State<OutputFormatSelector> {
   @override
   Widget build(BuildContext context) {
     final List<String> imageFormats = [
