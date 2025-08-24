@@ -28,7 +28,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
   late Uint8List pickedFile;
   late String pngURL;
   Scale selectedScale = Scale.same;
-
+  String originalImageFromat = '';
   int getScaleDimension({
     required Scale scale,
   }) {
@@ -53,8 +53,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
     print('Selected scale in ConverterScreen: $selectedScale');
   }
 
-  bool fallbackValidator(String filename, String validFileExtension) {
-    if (filename.contains(validFileExtension)) {
+  bool fallbackValidator(
+      String filename, String validFileExtension, String validExtension2) {
+    if (filename.contains(validFileExtension) ||
+        filename.contains(validExtension2)) {
       return true;
     } else {
       return false;
@@ -67,16 +69,17 @@ class _ConverterScreenState extends State<ConverterScreen> {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
           type: FileType.custom,
-          allowedExtensions: ['svg'],
+          allowedExtensions: ['svg', 'png'],
         );
 
         if (result != null) {
           Uint8List fileBytes = result.files.first.bytes!;
           String fileName = result.files.first.name;
 
-          if (fallbackValidator(fileName, '.svg')) {
+          if (fallbackValidator(fileName, '.svg', '.png')) {
             setState(() {
               userHasPickedFile = true;
+              originalImageFromat = '.png';
               pickedFile = fileBytes;
               pickedFileName = fileName;
             });
@@ -306,7 +309,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         ),
                                       ],
                                     )
-                                  : const OutputFormatSelector(),
+                                  : const OutputFormatSelector(
+                                      originalImageFormat: '',
+                                    ),
                             ),
                             Center(
                                 child: GestureDetector(
