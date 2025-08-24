@@ -9,6 +9,8 @@ class FormatTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 60,
+      width: 80,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey.shade400,

@@ -121,8 +121,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                     Container(
                       width: containerWidth,
                       constraints: const BoxConstraints(
-                        minHeight: 350,
-                        maxHeight: 450,
+                        minHeight: 450,
+                        maxHeight: 650,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
