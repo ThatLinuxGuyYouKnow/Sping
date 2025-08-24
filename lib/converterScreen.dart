@@ -309,8 +309,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                     ),
                                   )
                                 : const OutputFormatSelector(),
-                            OutputFormatSelector()
-                            /*    Center(
+                            Center(
                                 child: GestureDetector(
                               onTap: () async {
                                 if (userHasPickedFile) {
@@ -363,7 +362,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   ],
                                 ),
                               ),
-                            )), */
+                            )),
                           ],
                         ),
                       ),

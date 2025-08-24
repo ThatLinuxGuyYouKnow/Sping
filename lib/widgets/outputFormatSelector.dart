@@ -16,7 +16,7 @@ class OutputFormatSelector extends StatelessWidget {
     ];
 
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(4.0),
       child: GridView.builder(
         itemCount: imageFormats.length,
         shrinkWrap: true,
