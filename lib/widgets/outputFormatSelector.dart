@@ -27,21 +27,10 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
       padding: const EdgeInsets.all(4.0),
       child: Column(
         children: [
-          Row(
-            children: [
-              Text('Convert this image'),
-              (widget.originalImageFormat.isNotEmpty && _selectedFormat != null)
-                  ? Row(
-                      children: [
-                        Text('from ${widget.originalImageFormat}'),
-                        Icon(Icons.swap_horiz),
-                        Text('$_selectedFormat')
-                      ],
-                    )
-                  : SizedBox.shrink()
-            ],
+          const Row(
+            children: [Text('Convert this image to ')],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           GridView.builder(
             itemCount: imageFormats.length,
             shrinkWrap: true,

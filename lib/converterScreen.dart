@@ -284,7 +284,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 30),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               child: userHasPickedFile
                                   ? Column(
                                       children: [
