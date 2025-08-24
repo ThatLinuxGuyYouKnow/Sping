@@ -6,7 +6,6 @@ class OutputFormatSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List of image format names to display.
     final List<String> imageFormats = [
       'PNG',
       'JPEG',
@@ -20,6 +19,8 @@ class OutputFormatSelector extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: GridView.builder(
         itemCount: imageFormats.length,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10.0,
@@ -27,7 +28,6 @@ class OutputFormatSelector extends StatelessWidget {
           childAspectRatio: 2.5,
         ),
         itemBuilder: (BuildContext context, int index) {
-          // Return a FormatTab for each format name in the list.
           return FormatTab(formatName: imageFormats[index]);
         },
       ),
