@@ -32,6 +32,12 @@ class _ScaleSelectorState extends State<ScaleSelector> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          children: [
+            Text('Resizer',
+                style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold))
+          ],
+        ),
         Container(
           height: widget.isSmallScreen ? 40 : 46,
           decoration: BoxDecoration(
@@ -115,7 +121,11 @@ class _ScaleSelectorState extends State<ScaleSelector> {
           ),
         ),
         Row(
-          children: [ScaleTextFields(isDesktop: true, hintText: 'height')],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ScaleTextFields(isDesktop: true, hintText: 'height'),
+            ScaleTextFields(isDesktop: true, hintText: 'width')
+          ],
         )
       ],
     );

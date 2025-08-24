@@ -8,15 +8,16 @@ class ScaleTextFields extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      width: 100,
+      height: 40,
+      width: 200,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
           TextField(
-            decoration: InputDecoration(hintText: hintText),
+            decoration: InputDecoration(
+                hintText: hintText, hintStyle: GoogleFonts.ubuntu()),
           ),
           Text(
             'px',
