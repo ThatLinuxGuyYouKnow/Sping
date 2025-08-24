@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FormatTab extends StatelessWidget {
   final String formatName;
-  final bool isSelected; // Receives its state from the parent
-  final VoidCallback onTap; // Receives its tap action from the parent
+  final bool isSelected;
+  final VoidCallback onTap;
 
   const FormatTab({
     super.key,
