@@ -30,8 +30,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
           Row(
             children: [
               Text('Convert this image'),
-              (widget.originalImageFormat.isNotEmpty &&
-                      _selectedFormat!.isNotEmpty)
+              (widget.originalImageFormat.isNotEmpty && _selectedFormat != null)
                   ? Row(
                       children: [
                         Text('from ${widget.originalImageFormat}'),
