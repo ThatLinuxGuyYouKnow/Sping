@@ -280,11 +280,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       ),
                               ),
                             ),
-                            userHasPickedFile
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 50),
-                                    child: Column(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 50),
+                              child: userHasPickedFile
+                                  ? Column(
                                       children: [
                                         Text(
                                           'Scale Factor',
@@ -306,9 +305,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                                       handleScaleSelected)),
                                         ),
                                       ],
-                                    ),
-                                  )
-                                : const OutputFormatSelector(),
+                                    )
+                                  : const OutputFormatSelector(),
+                            ),
                             Center(
                                 child: GestureDetector(
                               onTap: () async {
@@ -333,7 +332,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                               },
                               child: Container(
                                 width: isDesktop
-                                    ? containerWidth * 0.8
+                                    ? containerWidth
                                     : containerWidth * 0.9,
                                 height: 48,
                                 decoration: BoxDecoration(
@@ -346,7 +345,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Convert to PNG', // Updated text to match functionality
+                                      'Convert to PNG',
                                       style: GoogleFonts.ubuntu(
                                         color: Colors.white,
                                         fontSize: 16,
