@@ -1,30 +1,33 @@
+// lib/widgets/formatTabs.dart
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FormatTab extends StatefulWidget {
+class FormatTab extends StatelessWidget {
   final String formatName;
+  final bool isSelected; // Receives its state from the parent
+  final VoidCallback onTap; // Receives its tap action from the parent
 
-  const FormatTab({super.key, required this.formatName});
+  const FormatTab({
+    super.key,
+    required this.formatName,
+    required this.isSelected,
+    required this.onTap,
+  });
 
   @override
-  State<FormatTab> createState() => _FormatTabState();
-}
-
-class _FormatTabState extends State<FormatTab> {
-  bool isTileTaped = false;
-
   Widget build(BuildContext context) {
+    final Color backgroundColor =
+        isSelected ? Colors.black : Colors.transparent;
+    final Color textColor = isSelected ? Colors.white : Colors.black87;
+
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isTileTaped = !isTileTaped;
-        });
-      },
+      onTap: onTap,
       child: Container(
-        color: isTileTaped ? Colors.transparent : Colors.black,
         height: 60,
         width: 80,
         decoration: BoxDecoration(
+          color: backgroundColor,
           border: Border.all(
             color: Colors.grey.shade400,
           ),
@@ -32,10 +35,10 @@ class _FormatTabState extends State<FormatTab> {
         ),
         child: Center(
           child: Text(
-            widget.formatName,
+            formatName,
             style: GoogleFonts.ubuntu(
               fontWeight: FontWeight.w500,
-              color: isTileTaped ? Colors.black87 : Colors.white,
+              color: textColor,
             ),
           ),
         ),
