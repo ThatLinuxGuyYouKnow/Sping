@@ -9,7 +9,7 @@ import 'package:sping/utils/converter.dart';
 import 'package:sping/utils/pngTosvgConverter.dart';
 import 'package:sping/model/dimensions.dart';
 import 'package:sping/model/scaleEnums.dart';
-import 'package:sping/widgets/%60appBar.dart';
+import 'package:sping/widgets/appBar.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
 import 'package:sping/widgets/footer.dart';
 import 'package:sping/widgets/outputFormatSelector.dart';
