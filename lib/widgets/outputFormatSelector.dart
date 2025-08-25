@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sping/providers/progressProviders.dart';
 import 'package:sping/widgets/formatTabs.dart';
 
 class OutputFormatSelector extends StatefulWidget {
@@ -24,6 +26,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final progressProvider = Provider.of<ProgressProvider>(context);
     return Container(
       padding: const EdgeInsets.all(4.0),
       child: Column(
@@ -63,24 +66,29 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
           const SizedBox(
             height: 30,
           ),
-          Container(
-            height: 48,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Colors.black),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Next',
-                    style:
-                        GoogleFonts.ubuntu(color: Colors.white, fontSize: 16)),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                )
-              ],
+          GestureDetector(
+            onTap: () {
+              progressProvider.setHasSelectedOutputFormat(true);
+            },
+            child: Container(
+              height: 48,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.black),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Next',
+                      style: GoogleFonts.ubuntu(
+                          color: Colors.white, fontSize: 16)),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  )
+                ],
+              ),
             ),
           )
         ],

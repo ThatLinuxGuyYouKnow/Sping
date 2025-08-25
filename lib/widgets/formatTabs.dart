@@ -6,26 +6,29 @@ import 'package:provider/provider.dart';
 class FormatTab extends StatelessWidget {
   final String formatName;
   final bool isSelected;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const FormatTab({
     super.key,
     required this.formatName,
     required this.isSelected,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final progressProvider = Provider.of<ProgressProvider>(context);
-    bool originalImageIsSameFromat =
-        progressProvider.originalImageFormat.contains(formatName.toLowerCase());
-    final Color backgroundColor = isSelected && !originalImageIsSameFromat
-        ? Colors.black
-        : Colors.transparent;
-    final Color textColor = isSelected && !originalImageIsSameFromat
-        ? Colors.white
-        : Colors.black87;
+    final progressProvider =
+        Provider.of<ProgressProvider>(context, listen: false);
+
+    bool isOriginalFormat =
+        progressProvider.originalImageFormat == formatName.toLowerCase();
+
+    final Color backgroundColor =
+        isSelected && !isOriginalFormat ? Colors.black : Colors.transparent;
+    final Color textColor =
+        isSelected && !isOriginalFormat ? Colors.white : Colors.black87;
+    final Color borderColor =
+        isOriginalFormat ? Colors.black : Colors.grey.shade400;
 
     return GestureDetector(
       onTap: onTap,
@@ -35,17 +38,19 @@ class FormatTab extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           border: Border.all(
-            color:
-                originalImageIsSameFromat ? Colors.black : Colors.grey.shade400,
+            color: borderColor,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
-          child: Text(
-            formatName,
-            style: GoogleFonts.ubuntu(
-              fontWeight: FontWeight.w500,
-              color: textColor,
+          child: Opacity(
+            opacity: isOriginalFormat ? 0.5 : 1.0,
+            child: Text(
+              formatName,
+              style: GoogleFonts.ubuntu(
+                fontWeight: FontWeight.w500,
+                color: textColor,
+              ),
             ),
           ),
         ),

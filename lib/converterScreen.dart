@@ -33,6 +33,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
   late String pngURL;
   Scale selectedScale = Scale.same;
   String originalImageFromat = '';
+
   int getScaleDimension({
     required Scale scale,
   }) {
@@ -69,10 +70,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool userHasPickedFile =
-        Provider.of<ProgressProvider>(context).userHasPickedFile;
     final progressProvider = Provider.of<ProgressProvider>(context);
-
+    final bool userHasPickedFile = progressProvider.userHasPickedFile;
+    final bool selectedOutputFormat =
+        progressProvider.userHasSelectedOutputFormat;
     pickImage() async {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -87,7 +88,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
           if (fallbackValidator(fileName, '.svg', '.png')) {
             progressProvider.setPickedFileStatus(true);
             progressProvider.setOriginalImageFormat(
-                '.png'); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
+                'png'); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
             setState(() {
               originalImageFromat = '.png';
               pickedFile = fileBytes;
@@ -252,11 +253,17 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
                             ),
-                            userHasPickedFile == true
-                                ? OutputFormatSelector()
+                            userHasPickedFile
+                                ? selectedOutputFormat
+                                    ? ScaleSelector(
+                                        onScaleSelected: handleScaleSelected,
+                                        initialScale: selectedScale,
+                                        isSmallScreen: !isDesktop && !isTablet,
+                                      )
+                                    : OutputFormatSelector()
                                 : Center(
                                     child: GestureDetector(
                                     onTap: () async {
