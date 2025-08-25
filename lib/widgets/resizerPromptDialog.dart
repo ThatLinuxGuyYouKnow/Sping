@@ -12,12 +12,12 @@ Future<bool?> showResizerDialog(BuildContext context) async {
         elevation: 0,
         backgroundColor: Colors.white,
         child: Container(
+          constraints: const BoxConstraints(maxWidth: 400),
           padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Title
               Text(
                 'Resize Image?',
                 style: GoogleFonts.ubuntu(
@@ -26,8 +26,7 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                   color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 8),
-
+              const SizedBox(height: 4),
               Text(
                 'Do you want to specify a new width and height for this image?',
                 style: GoogleFonts.ubuntu(
@@ -37,20 +36,23 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                 ),
               ),
               const SizedBox(height: 24),
-
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  const SizedBox(
+                    width: 4,
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                     child: Text(
                       'NO, SKIP',
-                      style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold),
+                      style: GoogleFonts.ubuntu(
+                          fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(true);
@@ -62,12 +64,15 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 12),
+                          horizontal: 30, vertical: 30),
                     ),
                     child: Text(
                       'YES, RESIZE',
                       style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold),
                     ),
+                  ),
+                  const SizedBox(
+                    width: 4,
                   ),
                 ],
               ),

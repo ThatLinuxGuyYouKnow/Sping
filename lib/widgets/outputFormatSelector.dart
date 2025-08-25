@@ -68,13 +68,14 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
             height: 30,
           ),
           GestureDetector(
-            onTap: () {
-              // progressProvider.setHasSelectedOutputFormat(true);
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return resizerDialog();
-                  });
+            onTap: () async {
+              progressProvider.setHasSelectedOutputFormat(true);
+
+              final bool? shouldResize = await showResizerDialog(context);
+
+              if (shouldResize ?? true) {
+                progressProvider.setHasSelectedOutputFormat(true);
+              }
             },
             child: Container(
               height: 48,
