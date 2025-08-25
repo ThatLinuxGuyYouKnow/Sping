@@ -5,12 +5,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sping/providers/progressProviders.dart';
 import 'package:sping/utils/converter.dart';
 import 'package:sping/utils/pngTosvgConverter.dart';
 import 'package:sping/model/dimensions.dart';
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/widgets/appBar.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
+import 'package:sping/widgets/fileTab.dart';
 import 'package:sping/widgets/footer.dart';
 import 'package:sping/widgets/outputFormatSelector.dart';
 import 'package:sping/widgets/scaleSelector.dart';
@@ -24,7 +27,7 @@ class ConverterScreen extends StatefulWidget {
 
 class _ConverterScreenState extends State<ConverterScreen> {
   bool uploadBoxInFocus = false;
-  bool userHasPickedFile = false;
+
   String? pickedFileName;
   late Uint8List pickedFile;
   late String pngURL;
@@ -66,6 +69,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool userHasPickedFile =
+        Provider.of<ProgressProvider>(context).userHasPickedFile;
+    final progressProvider = Provider.of<ProgressProvider>(context);
     pickImage() async {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -79,7 +85,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
           if (fallbackValidator(fileName, '.svg', '.png')) {
             setState(() {
-              userHasPickedFile = true;
+              progressProvider.setPickedFileStatus(true);
               originalImageFromat = '.png';
               pickedFile = fileBytes;
               pickedFileName = fileName;
@@ -124,9 +130,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
                     const SizedBox(height: 80),
                     Container(
                       width: containerWidth,
-                      constraints: const BoxConstraints(
-                        minHeight: 380,
-                        maxHeight: 380,
+                      constraints: BoxConstraints(
+                        minHeight: userHasPickedFile ? 540 : 380,
+                        maxHeight: userHasPickedFile ? 540 : 380,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
@@ -167,60 +173,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   uploadBoxInFocus = true;
                                 }),
                                 child: userHasPickedFile
-                                    ? Container(
-                                        height: 80,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          color: Colors.white,
-                                          border: Border.all(
-                                              color: Colors.grey.shade400,
-                                              width: 1.5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.1),
-                                              blurRadius: 8,
-                                              offset: const Offset(0, 4),
-                                            ),
-                                          ],
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.insert_drive_file_outlined,
-                                              color: Colors.grey.shade600,
-                                              size: 32,
-                                            ),
-                                            const SizedBox(width: 12),
-                                            Expanded(
-                                              child: Text(
-                                                pickedFileName!,
-                                                style: GoogleFonts.ubuntu(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black87,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 12),
-                                            IconButton(
-                                              icon: const Icon(
-                                                Icons.cancel,
-                                                color: Colors.black,
-                                              ),
-                                              onPressed: () {
-                                                setState(() {
-                                                  userHasPickedFile = false;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      )
+                                    ? FileTab(selectedFileName: pickedFileName!)
                                     : Container(
                                         height: isDesktop ? 200 : 150,
                                         decoration: BoxDecoration(
@@ -287,60 +240,66 @@ class _ConverterScreenState extends State<ConverterScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
-                            Center(
-                                child: GestureDetector(
-                              onTap: () async {
-                                if (userHasPickedFile) {
-                                  final svgContent = utf8.decode(pickedFile);
-                                  final converter = SvgToPngConverter(
-                                    svgContent: svgContent,
-                                    scaleWidthBy:
-                                        getScaleDimension(scale: selectedScale),
-                                    scaleHeightBy:
-                                        getScaleDimension(scale: selectedScale),
-                                  );
-                                  String url =
-                                      await converter.convertSvgToPng();
-                                  setState(() {
-                                    pngURL = url;
-                                  });
+                            userHasPickedFile == true
+                                ? OutputFormatSelector()
+                                : Center(
+                                    child: GestureDetector(
+                                    onTap: () async {
+                                      if (userHasPickedFile) {
+                                        final svgContent =
+                                            utf8.decode(pickedFile);
+                                        final converter = SvgToPngConverter(
+                                          svgContent: svgContent,
+                                          scaleWidthBy: getScaleDimension(
+                                              scale: selectedScale),
+                                          scaleHeightBy: getScaleDimension(
+                                              scale: selectedScale),
+                                        );
+                                        String url =
+                                            await converter.convertSvgToPng();
+                                        setState(() {
+                                          pngURL = url;
+                                        });
 
-                                  converter.downloadPng(pngURL,
-                                      getScaleDimension(scale: selectedScale));
-                                }
-                              },
-                              child: Container(
-                                width: isDesktop
-                                    ? containerWidth
-                                    : containerWidth * 0.9,
-                                height: 48,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: userHasPickedFile
-                                      ? Colors.black
-                                      : Colors.grey.shade400,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Convert to PNG',
-                                      style: GoogleFonts.ubuntu(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
+                                        converter.downloadPng(
+                                            pngURL,
+                                            getScaleDimension(
+                                                scale: selectedScale));
+                                      }
+                                    },
+                                    child: Container(
+                                      width: isDesktop
+                                          ? containerWidth
+                                          : containerWidth * 0.9,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: userHasPickedFile
+                                            ? Colors.black
+                                            : Colors.grey.shade400,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Convert to PNG',
+                                            style: GoogleFonts.ubuntu(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          const Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
-                                    const Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )),
+                                  ))
                           ],
                         ),
                       ),

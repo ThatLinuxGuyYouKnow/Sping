@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sping/converterScreen.dart';
 import 'package:flutter_app_icons/flutter_app_icons.dart';
 
+import 'package:sping/providers/progressProviders.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ProgressProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.Well duh?
   @override
   Widget build(BuildContext context) {
     final _flutterAppIconsPlugin = FlutterAppIcons();
@@ -21,6 +28,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: ConverterScreen());
+        home: const ConverterScreen());
   }
 }
