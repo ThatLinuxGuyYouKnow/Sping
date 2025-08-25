@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
 import 'package:sping/widgets/formatTabs.dart';
+import 'package:sping/widgets/resizerPromptDialog.dart';
 
 class OutputFormatSelector extends StatefulWidget {
   const OutputFormatSelector({super.key, this.originalImageFormat = ''});
@@ -68,7 +69,12 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
           ),
           GestureDetector(
             onTap: () {
-              progressProvider.setHasSelectedOutputFormat(true);
+              // progressProvider.setHasSelectedOutputFormat(true);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return resizerDialog();
+                  });
             },
             child: Container(
               height: 48,
