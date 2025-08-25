@@ -151,7 +151,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                 : 340,
                       ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
                         border: Border.all(color: Colors.black),
                       ),
