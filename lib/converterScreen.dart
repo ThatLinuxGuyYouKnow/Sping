@@ -72,6 +72,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
     final bool userHasPickedFile =
         Provider.of<ProgressProvider>(context).userHasPickedFile;
     final progressProvider = Provider.of<ProgressProvider>(context);
+
     pickImage() async {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -84,8 +85,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
           String fileName = result.files.first.name;
 
           if (fallbackValidator(fileName, '.svg', '.png')) {
+            progressProvider.setPickedFileStatus(true);
+            progressProvider.setOriginalImageFormat(
+                '.png'); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
             setState(() {
-              progressProvider.setPickedFileStatus(true);
               originalImageFromat = '.png';
               pickedFile = fileBytes;
               pickedFileName = fileName;
@@ -131,8 +134,20 @@ class _ConverterScreenState extends State<ConverterScreen> {
                     Container(
                       width: containerWidth,
                       constraints: BoxConstraints(
-                        minHeight: userHasPickedFile ? 540 : 380,
-                        maxHeight: userHasPickedFile ? 540 : 380,
+                        minHeight: userHasPickedFile
+                            ? isDesktop
+                                ? 540
+                                : 440
+                            : isDesktop
+                                ? 380
+                                : 340,
+                        maxHeight: userHasPickedFile
+                            ? isDesktop
+                                ? 540
+                                : 440
+                            : isDesktop
+                                ? 380
+                                : 340,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
