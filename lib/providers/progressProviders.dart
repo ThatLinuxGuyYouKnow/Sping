@@ -5,8 +5,8 @@ class ProgressProvider extends ChangeNotifier {
   bool get userHasPickedFile => _hasPickedAFile;
   bool _hasSelectedOutputFormat = false;
   bool get userHasSelectedOutputFormat => _hasSelectedOutputFormat;
-  String _selectedFromat = '';
-  String get userSelectedFromat => _selectedFromat;
+  String _originalImageFormat = '';
+  String get originalImageFormat => _originalImageFormat;
 
   setPickedFileStatus(bool status) {
     _hasPickedAFile = status;
@@ -18,8 +18,8 @@ class ProgressProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setUserSeelectedFromat(String format) {
-    _selectedFromat = format;
+  setOriginalImageFormat(String format) {
+    _originalImageFormat = format;
     notifyListeners();
   }
 }
