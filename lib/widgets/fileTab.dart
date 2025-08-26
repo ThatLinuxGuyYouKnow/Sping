@@ -13,12 +13,12 @@ class FileTab extends StatelessWidget {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         border: Border.all(color: Colors.grey.shade400, width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.grey.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
