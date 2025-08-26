@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 
-Future<Uint8List?> pickFiles() async {
+Future<Map<String, dynamic>?> pickFiles({required Function onPicked}) async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     allowMultiple: false,
     type: FileType.custom,
@@ -11,7 +11,13 @@ Future<Uint8List?> pickFiles() async {
   if (result != null) {
     Uint8List fileBytes = result.files.first.bytes!;
     String fileName = result.files.first.name;
-    return fileBytes;
+    String? fileExtension = result.files.first.extension;
+
+    return {
+      'bytes': fileBytes,
+      'name': fileName,
+      'extension': fileExtension,
+    };
   }
 
   return null;
