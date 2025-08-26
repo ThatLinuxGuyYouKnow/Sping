@@ -10,7 +10,7 @@ class ProgressProvider extends ChangeNotifier {
   bool _userWantsToResizeImage = false;
   bool get userWantsToResizeImage => _userWantsToResizeImage;
   Map<String, String> _imageDimensions = {};
-  Map get imageDimensions => imageDimensions;
+  Map<String, String> get imageDimensions => imageDimensions;
 
   setPickedFileStatus(bool status) {
     _hasPickedAFile = status;

@@ -275,7 +275,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         onScaleSelected: handleScaleSelected,
                                         initialScale: selectedScale,
                                         isSmallScreen: !isDesktop && !isTablet,
-                                      )
+                                        imageDimensions:
+                                            progressProvider.imageDimensions)
                                     : OutputFormatSelector()
                                 : SizedBox.shrink()
 
