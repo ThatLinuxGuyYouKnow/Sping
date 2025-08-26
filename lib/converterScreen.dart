@@ -76,35 +76,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
     final bool userHasSelectedOutputFormat =
         progressProvider.userHasSelectedOutputFormat;
 
-/*     pickImage() async {
-      try {
-        FilePickerResult? result = await FilePicker.platform.pickFiles(
-          type: FileType.custom,
-          allowedExtensions: ['svg', 'png'],
-        );
-
-        if (result != null) {
-          Uint8List fileBytes = result.files.first.bytes!;
-          String fileName = result.files.first.name;
-
-          if (fallbackValidator(fileName, '.svg', '.png')) {
-            progressProvider.setPickedFileStatus(true);
-            progressProvider.setOriginalImageFormat(
-                'png'); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
-            setState(() {
-              originalImageFormat = '.png';
-              pickedFile = fileBytes;
-              pickedFileName = fileName;
-            });
-          } else {
-            buildErrorSnackbar(context, "Looks like this file isn't an SVG!");
-          }
-        }
-      } catch (error) {
-        print('File picker error: $error');
-      }
-    } */
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth > 900;
@@ -182,15 +153,17 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       final resultData = await pickFiles();
                                       String fileName = resultData!['name'];
                                       Uint8List fileBytes = resultData['bytes'];
+
                                       String originalImageFormat =
                                           resultData['extension'];
-
+                                      print('Image extension is ' +
+                                          originalImageFormat);
                                       if (fallbackValidator(
                                           fileName, '.svg', '.png')) {
                                         progressProvider
                                             .setPickedFileStatus(true);
                                         progressProvider.setOriginalImageFormat(
-                                            originalImageFormat); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
+                                            originalImageFormat);
                                         setState(() {
                                           originalImageFormat =
                                               originalImageFormat;
