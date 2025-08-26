@@ -74,6 +74,10 @@ class _ConverterScreenState extends State<ConverterScreen> {
     final bool userHasPickedFile = progressProvider.userHasPickedFile;
     final bool selectedOutputFormat =
         progressProvider.userHasSelectedOutputFormat;
+    final bool userWantsToResize = progressProvider.userWantsToResizeImage;
+    final bool userHasSelectedOutputFormat =
+        progressProvider.userHasSelectedOutputFormat;
+
     pickImage() async {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -110,6 +114,21 @@ class _ConverterScreenState extends State<ConverterScreen> {
             constraints.maxWidth > 600 && constraints.maxWidth <= 900;
         //  final isMobile = constraints.maxWidth <= 600;
 
+        final double containerHeight;
+        if (!userHasPickedFile) {
+          // State 1: Initial upload prompt
+          containerHeight = isDesktop ? 380 : 340;
+        } else if (userHasPickedFile && !userHasSelectedOutputFormat) {
+          // State 2: User picked a file, now showing format selection
+          containerHeight = isDesktop ? 540 : 520; // Largest height
+        } else if (userWantsToResize) {
+          // State 3: User selected format, now showing resize options
+          containerHeight =
+              isDesktop ? 400 : 320; // Medium height (smaller than state 2)
+        } else {
+          containerHeight = isDesktop ? 380 : 340;
+        }
+
         final containerWidth = isDesktop
             ? constraints.maxWidth * 0.4
             : isTablet
@@ -132,24 +151,11 @@ class _ConverterScreenState extends State<ConverterScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 100),
-                    Container(
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
                       width: containerWidth,
-                      constraints: BoxConstraints(
-                        minHeight: userHasPickedFile
-                            ? isDesktop
-                                ? 540
-                                : 440
-                            : isDesktop
-                                ? 380
-                                : 340,
-                        maxHeight: userHasPickedFile
-                            ? isDesktop
-                                ? 540
-                                : 440
-                            : isDesktop
-                                ? 380
-                                : 340,
-                      ),
+                      height: containerHeight,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,

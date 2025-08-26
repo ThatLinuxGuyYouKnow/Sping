@@ -55,6 +55,7 @@ class FileTab extends StatelessWidget {
               onPressed: () {
                 progressProvider.setPickedFileStatus(false);
                 progressProvider.setHasSelectedOutputFormat(false);
+                progressProvider.setUserwantsToResizeStatus(false);
               },
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sping/providers/progressProviders.dart';
 
 Future<bool?> showResizerDialog(BuildContext context) async {
   return showDialog<bool>(
@@ -55,6 +57,9 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                   const SizedBox(width: 4),
                   ElevatedButton(
                     onPressed: () {
+                      final progressProvider =
+                          Provider.of<ProgressProvider>(context, listen: false);
+                      progressProvider.setUserwantsToResizeStatus(true);
                       Navigator.of(context).pop(true);
                     },
                     style: ElevatedButton.styleFrom(
