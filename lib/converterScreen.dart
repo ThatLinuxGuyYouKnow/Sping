@@ -120,7 +120,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
           containerHeight = isDesktop ? 380 : 340;
         } else if (userHasPickedFile && !userHasSelectedOutputFormat) {
           // State 2: User picked a file, now showing format selection
-          containerHeight = isDesktop ? 540 : 520; // Largest height
+          containerHeight = isDesktop ? 540 : 420; // Largest height
         } else if (userWantsToResize) {
           // State 3: User selected format, now showing resize options
           containerHeight =

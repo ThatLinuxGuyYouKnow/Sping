@@ -31,7 +31,7 @@ class FormatTab extends StatelessWidget {
         isOriginalFormat ? Colors.black : Colors.grey.shade400;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: isOriginalFormat ? () {} : onTap,
       child: Container(
         height: 60,
         width: 80,
