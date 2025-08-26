@@ -45,15 +45,18 @@ class FileTab extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          IconButton(
-            icon: const Icon(
-              Icons.cancel,
-              color: Colors.black,
+          Tooltip(
+            message: 'Remove this image file',
+            child: IconButton(
+              icon: const Icon(
+                Icons.cancel_outlined,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                progressProvider.setPickedFileStatus(false);
+                progressProvider.setHasSelectedOutputFormat(false);
+              },
             ),
-            onPressed: () {
-              progressProvider.setPickedFileStatus(false);
-              progressProvider.setHasSelectedOutputFormat(false);
-            },
           ),
         ],
       ),

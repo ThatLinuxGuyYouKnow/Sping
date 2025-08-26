@@ -7,6 +7,8 @@ class ProgressProvider extends ChangeNotifier {
   bool get userHasSelectedOutputFormat => _hasSelectedOutputFormat;
   String _originalImageFormat = '';
   String get originalImageFormat => _originalImageFormat;
+  bool _userWantsToResizeImage = false;
+  bool get userWantsToResizeImage => _userWantsToResizeImage;
 
   setPickedFileStatus(bool status) {
     _hasPickedAFile = status;
@@ -20,6 +22,11 @@ class ProgressProvider extends ChangeNotifier {
 
   setOriginalImageFormat(String format) {
     _originalImageFormat = format;
+    notifyListeners();
+  }
+
+  setUserwantsToResizeStatus(bool shouldResize) {
+    _userWantsToResizeImage = shouldResize;
     notifyListeners();
   }
 }
