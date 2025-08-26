@@ -1,15 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
-import 'package:sping/utils/converter.dart';
-import 'package:sping/utils/pngTosvgConverter.dart';
-import 'package:sping/model/dimensions.dart';
+
+import 'package:sping/utils/filePicker.dart';
+
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/widgets/appBar.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
@@ -32,7 +30,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
   late Uint8List pickedFile;
   late String pngURL;
   Scale selectedScale = Scale.same;
-  String originalImageFromat = '';
+  String originalImageFormat = '';
 
   int getScaleDimension({
     required Scale scale,
@@ -78,7 +76,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
     final bool userHasSelectedOutputFormat =
         progressProvider.userHasSelectedOutputFormat;
 
-    pickImage() async {
+/*     pickImage() async {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
           type: FileType.custom,
@@ -94,7 +92,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
             progressProvider.setOriginalImageFormat(
                 'png'); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
             setState(() {
-              originalImageFromat = '.png';
+              originalImageFormat = '.png';
               pickedFile = fileBytes;
               pickedFileName = fileName;
             });
@@ -105,7 +103,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
       } catch (error) {
         print('File picker error: $error');
       }
-    }
+    } */
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -181,8 +179,28 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   ? () {}
                                   : () async {
                                       print('Hit Gesture Detector');
+                                      final resultData = await pickFiles();
+                                      String fileName = resultData!['name'];
+                                      Uint8List fileBytes = resultData['bytes'];
+                                      String originalImageFormat =
+                                          resultData['extension'];
 
-                                      await pickImage();
+                                      if (fallbackValidator(
+                                          fileName, '.svg', '.png')) {
+                                        progressProvider
+                                            .setPickedFileStatus(true);
+                                        progressProvider.setOriginalImageFormat(
+                                            originalImageFormat); //TODO: FOR TEST, IT SHOULD ACTUALLY TRACK THE IMAGE FORMAT THE USER SELECTED
+                                        setState(() {
+                                          originalImageFormat =
+                                              originalImageFormat;
+                                          pickedFile = fileBytes;
+                                          pickedFileName = fileName;
+                                        });
+                                      } else {
+                                        buildErrorSnackbar(context,
+                                            "Looks like this file isn't an SVG!");
+                                      }
                                     },
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.click,

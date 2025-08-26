@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 
-Future<Map<String, dynamic>?> pickFiles({required Function onPicked}) async {
+Future<Map<String, dynamic>?> pickFiles() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     allowMultiple: false,
     type: FileType.custom,
