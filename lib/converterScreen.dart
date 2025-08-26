@@ -9,6 +9,7 @@ import 'package:sping/providers/progressProviders.dart';
 import 'package:sping/utils/filePicker.dart';
 
 import 'package:sping/model/scaleEnums.dart';
+import 'package:sping/utils/getImageDimensions.dart';
 import 'package:sping/widgets/appBar.dart';
 import 'package:sping/widgets/errorSnackbar.dart';
 import 'package:sping/widgets/fileTab.dart';
@@ -146,35 +147,50 @@ class _ConverterScreenState extends State<ConverterScreen> {
                             ),
                             SizedBox(height: userHasPickedFile ? 30 : 16),
                             GestureDetector(
-                              onTap: userHasPickedFile
-                                  ? () {}
-                                  : () async {
-                                      print('Hit Gesture Detector');
-                                      final resultData = await pickFiles();
-                                      String fileName = resultData!['name'];
-                                      Uint8List fileBytes = resultData['bytes'];
+                              onTap: () async {
+                                print('Hit Gesture Detector');
+                                final resultData = await pickFiles();
 
-                                      String originalImageFormat =
-                                          resultData['extension'];
-                                      print('Image extension is ' +
+                                if (resultData != null) {
+                                  String fileName = resultData['name'];
+                                  Uint8List fileBytes = resultData['bytes'];
+                                  String originalImageFormat =
+                                      resultData['extension'];
+
+                                  final imageDimensions =
+                                      await getImageSizeFromBytes(fileBytes);
+
+                                  if (imageDimensions != null) {
+                                    progressProvider.setImageDimensions(
+                                        height:
+                                            imageDimensions.height.toString(),
+                                        width:
+                                            imageDimensions.width.toString());
+
+                                    if (fallbackValidator(
+                                        fileName, '.svg', '.png')) {
+                                      progressProvider
+                                          .setPickedFileStatus(true);
+                                      progressProvider.setOriginalImageFormat(
                                           originalImageFormat);
-                                      if (fallbackValidator(
-                                          fileName, '.svg', '.png')) {
-                                        progressProvider
-                                            .setPickedFileStatus(true);
-                                        progressProvider.setOriginalImageFormat(
-                                            originalImageFormat);
-                                        setState(() {
-                                          originalImageFormat =
-                                              originalImageFormat;
-                                          pickedFile = fileBytes;
-                                          pickedFileName = fileName;
-                                        });
-                                      } else {
-                                        buildErrorSnackbar(context,
-                                            "Looks like this file isn't an SVG!");
-                                      }
-                                    },
+
+                                      setState(() {
+                                        pickedFile = fileBytes;
+                                        pickedFileName = fileName;
+                                      });
+                                    } else {
+                                      buildErrorSnackbar(context,
+                                          "Looks like this file isn't an SVG!");
+                                    }
+                                  } else {
+                                    buildErrorSnackbar(context,
+                                        "Failed to get image dimensions!");
+                                  }
+                                } else {
+                                  buildErrorSnackbar(
+                                      context, "No file selected!");
+                                }
+                              },
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 onExit: (event) {

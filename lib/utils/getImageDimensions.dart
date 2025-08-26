@@ -1,23 +1,14 @@
-import 'dart:async';
-
+import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
 
-Future<Size> getImageSize(ImageProvider imageProvider) async {
-  final ImageStream stream = imageProvider.resolve(ImageConfiguration.empty);
-  final Completer<Size> completer = Completer<Size>();
+Future<Size?> getImageSizeFromBytes(Uint8List bytes) async {
+  final image = img.decodeImage(bytes);
 
-  late ImageStreamListener listener;
-  listener = ImageStreamListener((ImageInfo info, bool synchronousCall) {
-    final Size size = Size(
-      info.image.width.toDouble(),
-      info.image.height.toDouble(),
-    );
-    completer.complete(size);
-    stream.removeListener(listener);
-  });
+  if (image != null) {
+    return Size(image.width.toDouble(), image.height.toDouble());
+  }
 
-  stream.addListener(listener);
-  return completer.future;
+  return null;
 }
