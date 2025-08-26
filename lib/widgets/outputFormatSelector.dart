@@ -82,7 +82,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Next',
+                  Text('Convert',
                       style: GoogleFonts.ubuntu(
                           color: Colors.white, fontSize: 16)),
                   const SizedBox(

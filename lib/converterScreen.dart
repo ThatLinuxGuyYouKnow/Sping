@@ -131,7 +131,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 100),
                     Container(
                       width: containerWidth,
                       constraints: BoxConstraints(
@@ -264,7 +264,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         isSmallScreen: !isDesktop && !isTablet,
                                       )
                                     : OutputFormatSelector()
-                                : Center(
+                                : SizedBox.shrink()
+
+                            /*   : Center(
                                     child: GestureDetector(
                                     onTap: () async {
                                       if (userHasPickedFile) {
@@ -321,7 +323,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         ],
                                       ),
                                     ),
-                                  ))
+                                  )) */
                           ],
                         ),
                       ),
