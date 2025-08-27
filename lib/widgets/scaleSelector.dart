@@ -106,6 +106,29 @@ class _ScaleSelectorState extends State<ScaleSelector> {
               ),
             ),
           ],
+        ),
+        const SizedBox(height: 40),
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.black),
+            height: 50,
+            child: Center(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Convert',
+                  style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.white),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Icon(Icons.arrow_forward)
+              ],
+            )),
+          ),
         )
       ],
     );
