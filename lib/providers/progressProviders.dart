@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class ProgressProvider extends ChangeNotifier {
@@ -11,7 +13,8 @@ class ProgressProvider extends ChangeNotifier {
   bool get userWantsToResizeImage => _userWantsToResizeImage;
   Map<String, String> _imageDimensions = {};
   Map<String, String> get imageDimensions => _imageDimensions;
-
+  Uint8List? get imageBytes => _imageBytes;
+  Uint8List? _imageBytes;
   setPickedFileStatus(bool status) {
     _hasPickedAFile = status;
     notifyListeners();
@@ -35,5 +38,9 @@ class ProgressProvider extends ChangeNotifier {
   setImageDimensions({required String height, required String width}) {
     _imageDimensions = {'height': height, 'width': width};
     notifyListeners();
+  }
+
+  setImageBytes(Uint8List imageBytes) {
+    _imageBytes = imageBytes;
   }
 }

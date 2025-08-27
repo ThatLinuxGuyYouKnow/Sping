@@ -1,9 +1,14 @@
 import 'package:image/image.dart' as img;
 import 'dart:typed_data';
 
-Future<Uint8List?> convertImageFormat(
-    Uint8List inputBytes, String imageOutputFormat,
-    {int jpegQuality = 85}) async {
+Future<Uint8List?> convertAndResizeImage(
+  Uint8List inputBytes,
+  String outputFormat, {
+  int? targetWidth,
+  int? targetHeight,
+  int jpegQuality = 85,
+  img.Interpolation interpolation = img.Interpolation.linear,
+}) async {
   try {
     img.Image? image = img.decodeImage(inputBytes);
 
@@ -12,9 +17,13 @@ Future<Uint8List?> convertImageFormat(
       return null;
     }
 
+    if (targetWidth != null || targetHeight != null) {
+      image = _resizeImage(image, targetWidth, targetHeight, interpolation);
+    }
+
     List<int> outputBytes;
 
-    switch (imageOutputFormat) {
+    switch (outputFormat) {
       case 'png':
         outputBytes = img.encodePng(image);
         break;
@@ -36,14 +45,43 @@ Future<Uint8List?> convertImageFormat(
       case 'tga':
         outputBytes = img.encodeTga(image);
         break;
-
       default:
-        throw UnsupportedError('Unsupported image format: $imageOutputFormat');
+        throw ('Unknownimage format');
     }
 
     return Uint8List.fromList(outputBytes);
   } catch (e) {
-    print('Error converting image: $e');
+    print('Error converting/resizing image: $e');
     return null;
   }
+}
+
+img.Image _resizeImage(
+  img.Image image,
+  int? targetWidth,
+  int? targetHeight,
+  img.Interpolation interpolation,
+) {
+  if (targetWidth != null && targetHeight != null) {
+    return img.copyResize(
+      image,
+      width: targetWidth,
+      height: targetHeight,
+      interpolation: interpolation,
+    );
+  } else if (targetWidth != null) {
+    return img.copyResize(
+      image,
+      width: targetWidth,
+      interpolation: interpolation,
+    );
+  } else if (targetHeight != null) {
+    return img.copyResize(
+      image,
+      height: targetHeight,
+      interpolation: interpolation,
+    );
+  }
+
+  return image;
 }
