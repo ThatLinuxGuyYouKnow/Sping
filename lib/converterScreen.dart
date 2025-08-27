@@ -272,11 +272,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                             userHasPickedFile
                                 ? selectedOutputFormat
                                     ? ScaleSelector(
-                                        onScaleSelected: handleScaleSelected,
-                                        initialScale: selectedScale,
                                         isSmallScreen: !isDesktop && !isTablet,
-                                        imageDimensions:
-                                            progressProvider.imageDimensions)
+                                      )
                                     : OutputFormatSelector()
                                 : SizedBox.shrink()
 
