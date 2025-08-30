@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -116,7 +116,14 @@ class _ScaleSelectorState extends State<ScaleSelector> {
                 progressProvider.originalImageFormat,
                 targetHeight: int.parse(_heightController.text),
                 targetWidth: int.parse(_widthController.text));
-            downloadFile(image!, fileName: progressProvider.originalFileName);
+
+            final baseName = path
+                .basenameWithoutExtension(progressProvider.originalFileName);
+
+            final newExtension = progressProvider.outputFormat.toLowerCase();
+
+            final newFileName = '$baseName.$newExtension';
+            downloadFile(image!, fileName: newFileName);
           },
           child: Container(
             decoration: BoxDecoration(
