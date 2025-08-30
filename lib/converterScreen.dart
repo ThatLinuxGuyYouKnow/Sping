@@ -94,7 +94,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
         } else if (userWantsToResize) {
           // State 3: User selected format, now showing resize options
           containerHeight =
-              isDesktop ? 400 : 320; // Medium height (smaller than state 2)
+              isDesktop ? 410 : 320; // Medium height (smaller than state 2)
         } else {
           containerHeight = isDesktop ? 380 : 340;
         }
@@ -159,7 +159,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
                                   final imageDimensions =
                                       await getImageSizeFromBytes(fileBytes);
-
+                                  progressProvider.setImageBytes(fileBytes);
                                   if (imageDimensions != null) {
                                     progressProvider.setImageDimensions(
                                         height:

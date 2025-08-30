@@ -48,7 +48,7 @@ Future<Uint8List?> convertAndResizeImage(
       default:
         throw ('Unknownimage format');
     }
-
+    print('Succefully resized');
     return Uint8List.fromList(outputBytes);
   } catch (e) {
     print('Error converting/resizing image: $e');

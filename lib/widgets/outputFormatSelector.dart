@@ -55,6 +55,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
                 formatName: format,
                 isSelected: isSelected,
                 onTap: () {
+                  //set the output format to state : TODO
                   setState(() {
                     _selectedFormat = format;
                   });

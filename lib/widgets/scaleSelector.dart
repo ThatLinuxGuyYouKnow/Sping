@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/generalConverter.dart';
 import 'package:sping/widgets/scaleTextfields.dart';
 
 class ScaleSelector extends StatefulWidget {
@@ -66,9 +67,6 @@ class _ScaleSelectorState extends State<ScaleSelector> {
                 GoogleFonts.ubuntu(fontWeight: FontWeight.w500, fontSize: 16),
           ),
         ),
-        Container(
-            // ...
-            ),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -109,7 +107,11 @@ class _ScaleSelectorState extends State<ScaleSelector> {
         ),
         const SizedBox(height: 40),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            convertAndResizeImage(progressProvider.imageBytes!, 'ico',
+                targetHeight: int.parse(_heightController.toString()),
+                targetWidth: int.parse(_widthController.toString()));
+          },
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: Colors.black),
