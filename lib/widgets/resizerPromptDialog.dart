@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
 import 'package:sping/utils/downloadFile.dart';
+import 'package:path/path.dart' as path;
 
 Future<bool?> showResizerDialog(BuildContext context) async {
   return showDialog<bool>(
@@ -50,10 +51,16 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                       final progressProvider =
                           Provider.of<ProgressProvider>(context, listen: false);
                       final bytes = progressProvider.imageBytes;
-                      final fileName = progressProvider.originalFileName;
-                      downloadFile(bytes!,
-                          fileName: fileName.split('.').last[0] +
-                              progressProvider.outputFormat);
+
+                      final baseName = path.basenameWithoutExtension(
+                          progressProvider.originalFileName);
+
+                      final newExtension =
+                          progressProvider.outputFormat.toLowerCase();
+
+                      final newFileName = '$baseName.$newExtension';
+
+                      downloadFile(bytes!, fileName: newFileName);
                       Navigator.of(context).pop(false);
                     },
                     child: Text(

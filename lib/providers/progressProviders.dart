@@ -57,5 +57,6 @@ class ProgressProvider extends ChangeNotifier {
 
   setOutputFormat({required String outputFormat}) {
     _outputFormat = outputFormat;
+    notifyListeners();
   }
 }

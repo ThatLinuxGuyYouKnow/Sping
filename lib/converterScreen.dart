@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
 
 import 'package:sping/utils/filePicker.dart';
-
+import 'package:path/path.dart' as path;
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/utils/getImageDimensions.dart';
 import 'package:sping/widgets/appBar.dart';
@@ -57,14 +57,16 @@ class _ConverterScreenState extends State<ConverterScreen> {
     print('Selected scale in ConverterScreen: $selectedScale');
   }
 
-  bool fallbackValidator(
-      String filename, String validFileExtension, String validExtension2) {
-    if (filename.contains(validFileExtension) ||
-        filename.contains(validExtension2)) {
-      return true;
-    } else {
+  bool fallbackValidator(String filename, List<String> allowedExtensions) {
+    String extension = path.extension(filename);
+
+    if (extension.isEmpty) {
       return false;
     }
+
+    String cleanExtension = extension.substring(1).toLowerCase();
+
+    return allowedExtensions.contains(cleanExtension);
   }
 
   @override
@@ -170,8 +172,14 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                         width:
                                             imageDimensions.width.toString());
 
-                                    if (fallbackValidator(
-                                        fileName, '.svg', '.png')) {
+                                    if (fallbackValidator(fileName, [
+                                      'png',
+                                      'svg',
+                                      'tiff',
+                                      'ico',
+                                      'jpeg',
+                                      'jpg'
+                                    ])) {
                                       progressProvider
                                           .setPickedFileStatus(true);
                                       progressProvider.setOriginalImageFormat(
