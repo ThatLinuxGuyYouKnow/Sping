@@ -58,19 +58,12 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
               return FormatTab(
                 formatName: format,
                 isSelected: isSelected,
-                onTap: () async {
-                  final image = await convertAndResizeImage(
-                      progressProvider.imageBytes!,
-                      progressProvider.originalImageFormat,
-                      targetHeight: int.parse(
-                          progressProvider.imageDimensions['height']!),
-                      targetWidth: int.parse(
-                          progressProvider.imageDimensions['height']!));
-                  progressProvider.setImageBytes(image!);
+                onTap: () {
                   setState(() {
                     _selectedFormat = format;
                   });
-
+                  progressProvider.setOutputFormat(
+                      outputFormat: _selectedFormat!);
                   print('$format selected!');
                 },
               );
@@ -86,6 +79,14 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
               if (shouldResize ?? false) {
                 progressProvider.setHasSelectedOutputFormat(true);
               }
+              final image = await convertAndResizeImage(
+                  progressProvider.imageBytes!,
+                  progressProvider.originalImageFormat,
+                  targetHeight:
+                      int.parse(progressProvider.imageDimensions['height']!),
+                  targetWidth:
+                      int.parse(progressProvider.imageDimensions['height']!));
+              progressProvider.setImageBytes(image!);
             },
             child: Container(
               height: 48,

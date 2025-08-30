@@ -51,7 +51,9 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                           Provider.of<ProgressProvider>(context, listen: false);
                       final bytes = progressProvider.imageBytes;
                       final fileName = progressProvider.originalFileName;
-                      downloadFile(bytes!, fileName: fileName);
+                      downloadFile(bytes!,
+                          fileName: fileName.split('.').last[0] +
+                              progressProvider.outputFormat);
                       Navigator.of(context).pop(false);
                     },
                     child: Text(

@@ -16,6 +16,8 @@ class ProgressProvider extends ChangeNotifier {
   Uint8List? get imageBytes => _imageBytes;
   Uint8List? _imageBytes;
   String _originalFilename = '';
+  String _outputFormat = '';
+  String get outputFormat => _outputFormat;
 
   String get originalFileName => _originalFilename;
   setPickedFileStatus(bool status) {
@@ -51,5 +53,9 @@ class ProgressProvider extends ChangeNotifier {
   setOriginalFileName({required String filename}) {
     _originalFilename = filename;
     notifyListeners();
+  }
+
+  setOutputFormat({required String outputFormat}) {
+    _outputFormat = outputFormat;
   }
 }
