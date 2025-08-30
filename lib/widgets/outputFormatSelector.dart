@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/generalConverter.dart';
 import 'package:sping/widgets/formatTabs.dart';
 import 'package:sping/widgets/resizerPromptDialog.dart';
 
 class OutputFormatSelector extends StatefulWidget {
-  const OutputFormatSelector({super.key, this.originalImageFormat = ''});
+  const OutputFormatSelector(
+      {super.key, this.originalImageFormat = '', this.imageDimensions});
   final String originalImageFormat;
+  final imageDimensions;
 
   @override
   State<OutputFormatSelector> createState() => _OutputFormatSelectorState();
@@ -28,6 +31,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
   @override
   Widget build(BuildContext context) {
     final progressProvider = Provider.of<ProgressProvider>(context);
+
     return Container(
       padding: const EdgeInsets.all(4.0),
       child: Column(
@@ -54,8 +58,14 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
               return FormatTab(
                 formatName: format,
                 isSelected: isSelected,
-                onTap: () {
-                  //set the output format to state : TODO
+                onTap: () async {
+                  final image = await convertAndResizeImage(
+                      progressProvider.imageBytes!,
+                      progressProvider.originalImageFormat,
+                      targetHeight: int.parse(
+                          progressProvider.imageDimensions['height']!),
+                      targetWidth: int.parse(
+                          progressProvider.imageDimensions['height']!));
                   setState(() {
                     _selectedFormat = format;
                   });

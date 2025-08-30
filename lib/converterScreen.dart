@@ -76,7 +76,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
     final bool userWantsToResize = progressProvider.userWantsToResizeImage;
     final bool userHasSelectedOutputFormat =
         progressProvider.userHasSelectedOutputFormat;
-
+    Size _imageDimensions;
     return LayoutBuilder(
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth > 900;
@@ -159,6 +159,9 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
                                   final imageDimensions =
                                       await getImageSizeFromBytes(fileBytes);
+                                  _imageDimensions = imageDimensions!;
+                                  progressProvider.setOriginalFileName(
+                                      filename: resultData['name']);
                                   progressProvider.setImageBytes(fileBytes);
                                   if (imageDimensions != null) {
                                     progressProvider.setImageDimensions(

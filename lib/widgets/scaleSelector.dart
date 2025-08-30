@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/downloadFile.dart';
 import 'package:sping/utils/generalConverter.dart';
 import 'package:sping/widgets/scaleTextfields.dart';
 
@@ -107,10 +110,13 @@ class _ScaleSelectorState extends State<ScaleSelector> {
         ),
         const SizedBox(height: 40),
         GestureDetector(
-          onTap: () {
-            convertAndResizeImage(progressProvider.imageBytes!, 'ico',
-                targetHeight: int.parse(_heightController.toString()),
-                targetWidth: int.parse(_widthController.toString()));
+          onTap: () async {
+            final image = await convertAndResizeImage(
+                progressProvider.imageBytes!,
+                progressProvider.originalImageFormat,
+                targetHeight: int.parse(_heightController.text),
+                targetWidth: int.parse(_widthController.text));
+            downloadFile(image!, fileName: progressProvider.originalFileName);
           },
           child: Container(
             decoration: BoxDecoration(
