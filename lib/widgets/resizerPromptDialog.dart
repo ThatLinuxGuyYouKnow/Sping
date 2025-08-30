@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/downloadFile.dart';
 
 Future<bool?> showResizerDialog(BuildContext context) async {
   return showDialog<bool>(
@@ -46,6 +47,11 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                   ),
                   TextButton(
                     onPressed: () {
+                      final progressProvider =
+                          Provider.of<ProgressProvider>(context, listen: false);
+                      final bytes = progressProvider.imageBytes;
+                      final fileName = progressProvider.originalFileName;
+                      downloadFile(bytes!, fileName: fileName);
                       Navigator.of(context).pop(false);
                     },
                     child: Text(
