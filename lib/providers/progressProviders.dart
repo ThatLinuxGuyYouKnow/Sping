@@ -15,6 +15,9 @@ class ProgressProvider extends ChangeNotifier {
   Map<String, String> get imageDimensions => _imageDimensions;
   Uint8List? get imageBytes => _imageBytes;
   Uint8List? _imageBytes;
+  String _originalFilename = '';
+
+  String get originalFileName => _originalFilename;
   setPickedFileStatus(bool status) {
     _hasPickedAFile = status;
     notifyListeners();
@@ -42,5 +45,11 @@ class ProgressProvider extends ChangeNotifier {
 
   setImageBytes(Uint8List imageBytes) {
     _imageBytes = imageBytes;
+    notifyListeners();
+  }
+
+  setOriginalFileName({required String filename}) {
+    _originalFilename = filename;
+    notifyListeners();
   }
 }
