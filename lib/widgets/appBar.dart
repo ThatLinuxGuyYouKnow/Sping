@@ -21,7 +21,7 @@ class ResponsiveAppBar extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            ' SVG To PNG Converter',
+            'SPING',
             style: GoogleFonts.ubuntu(
               color: Colors.white,
               fontSize: isDesktop ? 32 : 20,
