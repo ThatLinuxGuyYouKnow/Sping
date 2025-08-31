@@ -1,5 +1,5 @@
 # Sping
-## SVG to PNG Conversion Tool, Built With <img alt="Flutter Badge" src="https://img.shields.io/badge/Flutter-0000FF.svg?&style=for-the-badge&logo=Flutter&logoColor=white" />
+## Image Format Conversion Tool, Built With <img alt="Flutter Badge" src="https://img.shields.io/badge/Flutter-0000FF.svg?&style=for-the-badge&logo=Flutter&logoColor=white" />
 
 All the magic happens in your browser!
 

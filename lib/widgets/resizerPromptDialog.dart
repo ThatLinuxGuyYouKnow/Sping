@@ -43,25 +43,22 @@ Future<bool?> showResizerDialog(BuildContext context) async {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(
-                    width: 4,
-                  ),
+                  const SizedBox(width: 4),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       final progressProvider =
                           Provider.of<ProgressProvider>(context, listen: false);
                       final bytes = progressProvider.imageBytes;
 
                       final baseName = path.basenameWithoutExtension(
                           progressProvider.originalFileName);
-
                       final newExtension =
                           progressProvider.outputFormat.toLowerCase();
-
                       final newFileName = '$baseName.$newExtension';
 
-                      downloadFile(bytes!, fileName: newFileName);
                       Navigator.of(context).pop(false);
+
+                      await downloadWithFeedback(context, bytes!, newFileName);
                     },
                     child: Text(
                       'NO, SKIP',
@@ -91,9 +88,7 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                       style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const SizedBox(
-                    width: 4,
-                  ),
+                  const SizedBox(width: 4),
                 ],
               ),
             ],
