@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A free, open source SVG to PNG converter",
+    "description": "A free, open source image format converter",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

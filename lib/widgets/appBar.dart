@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sping/logoScreen.dart';
 import 'package:sping/utils/pngTosvgConverter.dart';
 
 class ResponsiveAppBar extends StatelessWidget {
@@ -15,7 +16,16 @@ class ResponsiveAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Image(image: AssetImage('assets/logo.jpg')),
+        GestureDetector(
+            onTap: () {
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => Logoscreen(),
+                ),
+              );
+            },
+            child: const Image(image: AssetImage('assets/logo.jpg'))),
         const SizedBox(
           width: 8,
         ),
