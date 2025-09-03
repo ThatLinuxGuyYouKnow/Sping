@@ -63,7 +63,7 @@ class _AnimatedSuccessDialogState extends State<_AnimatedSuccessDialog>
             scale: _scaleAnimation,
             child: Icon(
               Icons.check_circle,
-              color: Colors.green,
+              color: Colors.black,
               size: 48,
             ),
           ),
