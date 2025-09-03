@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         icon:
             'favicon.png'); //REMINDER: FIXED FAVICON ISSUE ON NETLFIY BY MAUALLY CHANGING IT IN WEB/
     return MaterialApp(
-        title: "SPING: SVG to PNG converter",
+        title: "SPING",
         theme: ThemeData(
           useMaterial3: true,
         ),
