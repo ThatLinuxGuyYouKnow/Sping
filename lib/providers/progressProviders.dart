@@ -18,6 +18,8 @@ class ProgressProvider extends ChangeNotifier {
   String _originalFilename = '';
   String _outputFormat = '';
   String get outputFormat => _outputFormat;
+  bool get startedDownloadProcess => _startedDownloadProcess;
+  bool _startedDownloadProcess = true;
 
   String get originalFileName => _originalFilename;
   setPickedFileStatus(bool status) {
@@ -57,6 +59,11 @@ class ProgressProvider extends ChangeNotifier {
 
   setOutputFormat({required String outputFormat}) {
     _outputFormat = outputFormat;
+    notifyListeners();
+  }
+
+  notifyDownloadDone() {
+    _startedDownloadProcess = true;
     notifyListeners();
   }
 }
