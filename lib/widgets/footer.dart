@@ -20,7 +20,7 @@ class Footer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Made with ❤️ by',
+                'Sping is open source!, leave a star ⭐ ',
                 style: GoogleFonts.ubuntu(color: Colors.white),
               ),
               SizedBox(
@@ -29,10 +29,11 @@ class Footer extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   html.window.open(
-                      "https://github.com/ThatLinuxGuyYouKnow", "A friend");
+                      "https://github.com/ThatLinuxGuyYouKnow/sping",
+                      "Source Code");
                 },
                 child: Text(
-                  'ThatLinuxGuyYouKnow(Alabi Ayobami)',
+                  'Our GitHub',
                   style: GoogleFonts.ubuntu(
                       decoration: TextDecoration.underline,
                       decorationColor:
