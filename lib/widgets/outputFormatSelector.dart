@@ -19,14 +19,7 @@ class OutputFormatSelector extends StatefulWidget {
 class _OutputFormatSelectorState extends State<OutputFormatSelector> {
   String? _selectedFormat;
 
-  final List<String> imageFormats = [
-    'PNG',
-    'JPEG',
-    'ICO',
-    'GIF',
-    'JPG',
-    'TIFF'
-  ];
+  final List<String> imageFormats = ['PNG', 'TGA', 'ICO', 'GIF', 'JPG', 'TIFF'];
 
   @override
   Widget build(BuildContext context) {
