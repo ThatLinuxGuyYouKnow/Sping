@@ -55,6 +55,7 @@ class _FooterState extends State<Footer> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
+                          color: Colors.white,
                           icon: Icon(Icons.remove),
                           onPressed: () {
                             footerIsDismissed = true;
