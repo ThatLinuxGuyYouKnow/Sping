@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,13 +111,6 @@ class _ScaleSelectorState extends State<ScaleSelector> {
         const SizedBox(height: 40),
         GestureDetector(
           onTap: () async {
-            final image = await convertAndResizeImage(
-                progressProvider.imageBytes!,
-                progressProvider.originalImageFormat,
-                progressProvider.originalImageFormat,
-                targetHeight: int.parse(_heightController.text),
-                targetWidth: int.parse(_widthController.text));
-
             final baseName = path
                 .basenameWithoutExtension(progressProvider.originalFileName);
 
@@ -128,6 +120,13 @@ class _ScaleSelectorState extends State<ScaleSelector> {
             final isSVG = progressProvider.isSvgFile;
 
             if (!isSVG) {
+              final image = await convertAndResizeImage(
+                  progressProvider.imageBytes!,
+                  progressProvider.originalImageFormat,
+                  progressProvider.originalImageFormat,
+                  targetHeight: int.parse(_heightController.text),
+                  targetWidth: int.parse(_widthController.text));
+
               downloadFile(image!, fileName: newFileName);
             } else {
               convertAndDownloadSvg(

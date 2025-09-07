@@ -34,23 +34,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
   Scale selectedScale = Scale.same;
   String originalImageFormat = '';
 
-  int getScaleDimension({
-    required Scale scale,
-  }) {
-    switch (scale) {
-      case Scale.same:
-        return 1;
-      case Scale.large:
-        return 2;
-      case Scale.larger:
-        return 6; // 6x
-      case Scale.largest:
-        return 12; // 12x
-      default:
-        return 1;
-    }
-  }
-
   void handleScaleSelected(Scale scale) {
     setState(() {
       selectedScale = scale;
@@ -79,7 +62,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
     final bool userWantsToResize = progressProvider.userWantsToResizeImage;
     final bool userHasSelectedOutputFormat =
         progressProvider.userHasSelectedOutputFormat;
-    Size _imageDimensions;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth > 900;
@@ -305,65 +288,6 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                       )
                                     : OutputFormatSelector()
                                 : SizedBox.shrink()
-
-                            /*   : Center(
-                                    child: GestureDetector(
-                                    onTap: () async {
-                                      if (userHasPickedFile) {
-                                        final svgContent =
-                                            utf8.decode(pickedFile);
-                                        final converter = SvgToPngConverter(
-                                          svgContent: svgContent,
-                                          scaleWidthBy: getScaleDimension(
-                                              scale: selectedScale),
-                                          scaleHeightBy: getScaleDimension(
-                                              scale: selectedScale),
-                                        );
-                                        String url =
-                                            await converter.convertSvgToPng();
-                                        setState(() {
-                                          pngURL = url;
-                                        });
-
-                                        converter.downloadPng(
-                                            pngURL,
-                                            getScaleDimension(
-                                                scale: selectedScale));
-                                      }
-                                    },
-                                    child: Container(
-                                      width: isDesktop
-                                          ? containerWidth
-                                          : containerWidth * 0.9,
-                                      height: 48,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: userHasPickedFile
-                                            ? Colors.black
-                                            : Colors.grey.shade400,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Convert to PNG',
-                                            style: GoogleFonts.ubuntu(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          const Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.white,
-                                            size: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )) */
                           ],
                         ),
                       ),
