@@ -114,6 +114,7 @@ class _ScaleSelectorState extends State<ScaleSelector> {
             final image = await convertAndResizeImage(
                 progressProvider.imageBytes!,
                 progressProvider.originalImageFormat,
+                progressProvider.originalImageFormat,
                 targetHeight: int.parse(_heightController.text),
                 targetWidth: int.parse(_widthController.text));
 

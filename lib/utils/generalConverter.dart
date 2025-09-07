@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 Future<Uint8List?> convertAndResizeImage(
   Uint8List inputBytes,
+  String originalFormat,
   String outputFormat, {
   int? targetWidth,
   int? targetHeight,

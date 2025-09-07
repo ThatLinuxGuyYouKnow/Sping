@@ -75,6 +75,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
               final image = await convertAndResizeImage(
                   progressProvider.imageBytes!,
                   progressProvider.originalImageFormat,
+                  progressProvider.originalImageFormat,
                   targetHeight:
                       int.parse(progressProvider.imageDimensions['height']!),
                   targetWidth:

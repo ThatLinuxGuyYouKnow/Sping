@@ -165,37 +165,32 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   progressProvider.setOriginalFileName(
                                       filename: resultData['name']);
                                   progressProvider.setImageBytes(fileBytes);
-                                  if (imageDimensions != null) {
-                                    progressProvider.setImageDimensions(
-                                        height:
-                                            imageDimensions.height.toString(),
-                                        width:
-                                            imageDimensions.width.toString());
+                                  progressProvider.setImageDimensions(
+                                      height: imageDimensions.height.toString(),
+                                      width: imageDimensions.width.toString());
+                                  if (resultData['file'] != null) {
+                                    progressProvider
+                                        .setsvgFile(resultData['file']);
+                                  }
+                                  if (fallbackValidator(fileName, [
+                                    'png',
+                                    'svg',
+                                    'tiff',
+                                    'ico',
+                                    'jpeg',
+                                    'jpg'
+                                  ])) {
+                                    progressProvider.setPickedFileStatus(true);
+                                    progressProvider.setOriginalImageFormat(
+                                        originalImageFormat);
 
-                                    if (fallbackValidator(fileName, [
-                                      'png',
-                                      'svg',
-                                      'tiff',
-                                      'ico',
-                                      'jpeg',
-                                      'jpg'
-                                    ])) {
-                                      progressProvider
-                                          .setPickedFileStatus(true);
-                                      progressProvider.setOriginalImageFormat(
-                                          originalImageFormat);
-
-                                      setState(() {
-                                        pickedFile = fileBytes;
-                                        pickedFileName = fileName;
-                                      });
-                                    } else {
-                                      buildErrorSnackbar(context,
-                                          "Looks like this file isn't an SVG!");
-                                    }
+                                    setState(() {
+                                      pickedFile = fileBytes;
+                                      pickedFileName = fileName;
+                                    });
                                   } else {
                                     buildErrorSnackbar(context,
-                                        "Failed to get image dimensions!");
+                                        "Looks like this file isn't an SVG!");
                                   }
                                 } else {
                                   buildErrorSnackbar(
