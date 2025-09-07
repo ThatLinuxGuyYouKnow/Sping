@@ -47,27 +47,7 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                   const SizedBox(width: 4),
                   TextButton(
                     onPressed: () async {
-                      final progressProvider =
-                          Provider.of<ProgressProvider>(context, listen: false);
-                      final isSVG = progressProvider.isSvgFile;
-                      final bytes = progressProvider.imageBytes;
-
-                      final baseName = path.basenameWithoutExtension(
-                          progressProvider.originalFileName);
-                      final newExtension =
-                          progressProvider.outputFormat.toLowerCase();
-                      final newFileName = '$baseName.$newExtension';
-
                       Navigator.of(context).pop(false);
-                      if (!isSVG) {
-                        await downloadWithFeedback(
-                            context, bytes!, newFileName);
-                      } else {
-                        convertAndDownloadSvg(
-                            svgBytes: bytes!,
-                            outputFormat: progressProvider.outputFormat,
-                            imageName: newFileName);
-                      }
                     },
                     child: Text(
                       'NO, SKIP',
