@@ -18,7 +18,7 @@ Future<Map<String, dynamic>?> pickFiles() async {
       'bytes': fileBytes,
       'name': fileName,
       'extension': fileExtension,
-      'file': isSVG ? result.files.first : null
+      'isSVG': isSVG ? true : false
     };
   }
 

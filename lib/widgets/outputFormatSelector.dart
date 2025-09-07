@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/converter.dart';
 import 'package:sping/utils/generalConverter.dart';
 import 'package:sping/widgets/formatTabs.dart';
 import 'package:sping/widgets/resizerPromptDialog.dart';
@@ -72,15 +73,25 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
               if (shouldResize ?? false) {
                 progressProvider.setHasSelectedOutputFormat(true);
               }
-              final image = await convertAndResizeImage(
-                  progressProvider.imageBytes!,
-                  progressProvider.originalImageFormat,
-                  progressProvider.originalImageFormat,
-                  targetHeight:
-                      int.parse(progressProvider.imageDimensions['height']!),
-                  targetWidth:
-                      int.parse(progressProvider.imageDimensions['height']!));
-              progressProvider.setImageBytes(image!);
+              if (!progressProvider.isSvgFile) {
+                final image = await convertAndResizeImage(
+                    progressProvider.imageBytes!,
+                    progressProvider.originalImageFormat,
+                    progressProvider.originalImageFormat,
+                    targetHeight:
+                        int.parse(progressProvider.imageDimensions['height']!),
+                    targetWidth:
+                        int.parse(progressProvider.imageDimensions['height']!));
+                progressProvider.setImageBytes(image!);
+              } else {
+                convertAndDownloadSvg(
+                    outputFormat: progressProvider.outputFormat,
+                    svgBytes: progressProvider.imageBytes!,
+                    outputHeight:
+                        int.parse(progressProvider.imageDimensions['height']!),
+                    outputWidth:
+                        int.parse(progressProvider.imageDimensions['height']!));
+              }
             },
             child: Container(
               height: 48,

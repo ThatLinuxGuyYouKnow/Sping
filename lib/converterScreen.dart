@@ -168,9 +168,8 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   progressProvider.setImageDimensions(
                                       height: imageDimensions.height.toString(),
                                       width: imageDimensions.width.toString());
-                                  if (resultData['file'] != null) {
-                                    progressProvider
-                                        .setsvgFile(resultData['file']);
+                                  if (resultData['isSVG']) {
+                                    progressProvider.setsvgFile(true);
                                   }
                                   if (fallbackValidator(fileName, [
                                     'png',

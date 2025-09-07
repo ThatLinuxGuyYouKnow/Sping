@@ -21,8 +21,8 @@ class ProgressProvider extends ChangeNotifier {
   String get outputFormat => _outputFormat;
   bool get startedDownloadProcess => _startedDownloadProcess;
   bool _startedDownloadProcess = true;
-  FilePickerResult get svgFile => _svgFile;
-  late FilePickerResult _svgFile;
+  bool get isSvgFile => _svgFile;
+  bool _svgFile = false;
   String get originalFileName => _originalFilename;
   setPickedFileStatus(bool status) {
     _hasPickedAFile = status;
@@ -64,8 +64,8 @@ class ProgressProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setsvgFile(FilePickerResult svg) {
-    _svgFile = svg;
+  setsvgFile(bool isSvg) {
+    _svgFile = isSvg;
     notifyListeners();
   }
 
