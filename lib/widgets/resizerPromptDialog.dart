@@ -81,7 +81,8 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                       final progressProvider =
                           Provider.of<ProgressProvider>(context, listen: false);
                       progressProvider.setUserwantsToResizeStatus(true);
-                      progressProvider.clearImageBytes();
+
+                      progressProvider.clearImageBytes;
                       Navigator.of(context).pop(true);
                     },
                     style: ElevatedButton.styleFrom(
