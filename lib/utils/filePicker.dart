@@ -12,6 +12,7 @@ Future<Map<String, dynamic>?> pickFiles() async {
     Uint8List fileBytes = result.files.first.bytes!;
     String fileName = result.files.first.name;
     String? fileExtension = result.files.first.extension;
+
     bool isSVG = fileExtension == 'svg';
 
     return {

@@ -3,6 +3,17 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:typed_data';
 
+getSvgDimensions({required Uint8List imageBytes}) async {
+  final svgContent = utf8.decode(imageBytes);
+
+  final imageElement = await _svgStringToImageElement(svgContent);
+
+  final height = imageElement.naturalHeight;
+  final width = imageElement.naturalWidth;
+
+  return {'height': height, 'width': width};
+}
+
 Future<void> convertAndDownloadSvg({
   required Uint8List svgBytes,
   required int outputWidth,

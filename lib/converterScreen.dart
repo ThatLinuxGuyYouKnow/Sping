@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/converter.dart';
 
 import 'package:sping/utils/filePicker.dart';
 import 'package:path/path.dart' as path;
@@ -158,19 +159,42 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                   Uint8List fileBytes = resultData['bytes'];
                                   String originalImageFormat =
                                       resultData['extension'];
+                                  bool isSVG = resultData['isSVG'] == true;
 
-                                  final imageDimensions =
-                                      await getImageSizeFromBytes(fileBytes);
-                                  _imageDimensions = imageDimensions!;
+                                  num finalWidth = 0;
+                                  num finalHeight = 0;
+
+                                  try {
+                                    if (isSVG) {
+                                      progressProvider.setsvgFile(true);
+
+                                      final svgDimensions =
+                                          await getSvgDimensions(
+                                              imageBytes: fileBytes);
+                                      finalWidth = svgDimensions['width'] ?? 0;
+                                      finalHeight =
+                                          svgDimensions['height'] ?? 0;
+                                    } else {
+                                      final imageDimensions =
+                                          await getImageSizeFromBytes(
+                                              fileBytes);
+                                      finalWidth = imageDimensions!.width;
+                                      finalHeight = imageDimensions.height;
+                                    }
+                                  } catch (e) {
+                                    buildErrorSnackbar(context,
+                                        "Could not determine image dimensions. Error: $e");
+                                    return;
+                                  }
+
                                   progressProvider.setOriginalFileName(
-                                      filename: resultData['name']);
+                                      filename: fileName);
                                   progressProvider.setImageBytes(fileBytes);
                                   progressProvider.setImageDimensions(
-                                      height: imageDimensions.height.toString(),
-                                      width: imageDimensions.width.toString());
-                                  if (resultData['isSVG']) {
-                                    progressProvider.setsvgFile(true);
-                                  }
+                                    height: finalHeight.toString(),
+                                    width: finalWidth.toString(),
+                                  );
+
                                   if (fallbackValidator(fileName, [
                                     'png',
                                     'svg',
@@ -189,7 +213,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                                     });
                                   } else {
                                     buildErrorSnackbar(context,
-                                        "Looks like this file isn't an SVG!");
+                                        "Looks like this file isn't supported!");
                                   }
                                 } else {
                                   buildErrorSnackbar(
