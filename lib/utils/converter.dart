@@ -14,24 +14,24 @@ getSvgDimensions({required Uint8List imageBytes}) async {
   return {'height': height, 'width': width};
 }
 
-Future<void> convertAndDownloadSvg({
-  required Uint8List svgBytes,
-  required int outputWidth,
-  required int outputHeight,
-  required String outputFormat,
-}) async {
+Future<void> convertAndDownloadSvg(
+    {required Uint8List svgBytes,
+    int? outputWidth,
+    int? outputHeight,
+    required String outputFormat,
+    required String imageName}) async {
   final svgContent = utf8.decode(svgBytes);
 
   final imageElement = await _svgStringToImageElement(svgContent);
 
   final dataUrl = _createDataUrl(
     image: imageElement,
-    width: outputWidth,
-    height: outputHeight,
+    width: outputWidth ?? getSvgDimensions(imageBytes: svgBytes)['width'],
+    height: outputHeight ?? getSvgDimensions(imageBytes: svgBytes)['height'],
     format: outputFormat,
   );
 
-  final outputFilename = 'converted_image.${outputFormat.toLowerCase()}';
+  final outputFilename = '${imageName}.${outputFormat.toLowerCase()}';
 
   _downloadFile(dataUrl, outputFilename);
 }

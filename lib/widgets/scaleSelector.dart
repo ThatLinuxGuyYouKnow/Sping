@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/model/scaleEnums.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/converter.dart';
 import 'package:sping/utils/downloadFile.dart';
 import 'package:sping/utils/generalConverter.dart';
 import 'package:sping/widgets/scaleTextfields.dart';
@@ -124,7 +125,18 @@ class _ScaleSelectorState extends State<ScaleSelector> {
             final newExtension = progressProvider.outputFormat.toLowerCase();
 
             final newFileName = '$baseName.$newExtension';
-            downloadFile(image!, fileName: newFileName);
+            final isSVG = progressProvider.isSvgFile;
+
+            if (!isSVG) {
+              downloadFile(image!, fileName: newFileName);
+            } else {
+              convertAndDownloadSvg(
+                  svgBytes: progressProvider.imageBytes!,
+                  outputFormat: progressProvider.outputFormat,
+                  imageName: newFileName,
+                  outputHeight: int.parse(_heightController.text),
+                  outputWidth: int.parse(_widthController.text));
+            }
           },
           child: Container(
             decoration: BoxDecoration(

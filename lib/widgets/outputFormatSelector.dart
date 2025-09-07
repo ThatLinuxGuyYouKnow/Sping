@@ -83,15 +83,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
                     targetWidth:
                         int.parse(progressProvider.imageDimensions['height']!));
                 progressProvider.setImageBytes(image!);
-              } else {
-                convertAndDownloadSvg(
-                    outputFormat: progressProvider.outputFormat,
-                    svgBytes: progressProvider.imageBytes!,
-                    outputHeight:
-                        int.parse(progressProvider.imageDimensions['height']!),
-                    outputWidth:
-                        int.parse(progressProvider.imageDimensions['height']!));
-              }
+              } else {}
             },
             child: Container(
               height: 48,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sping/providers/progressProviders.dart';
+import 'package:sping/utils/converter.dart';
 import 'package:sping/utils/downloadFile.dart';
 import 'package:path/path.dart' as path;
 
@@ -48,6 +49,7 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                     onPressed: () async {
                       final progressProvider =
                           Provider.of<ProgressProvider>(context, listen: false);
+                      final isSVG = progressProvider.isSvgFile;
                       final bytes = progressProvider.imageBytes;
 
                       final baseName = path.basenameWithoutExtension(
@@ -57,8 +59,15 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                       final newFileName = '$baseName.$newExtension';
 
                       Navigator.of(context).pop(false);
-
-                      await downloadWithFeedback(context, bytes!, newFileName);
+                      if (isSVG) {
+                        await downloadWithFeedback(
+                            context, bytes!, newFileName);
+                      } else {
+                        convertAndDownloadSvg(
+                            svgBytes: bytes!,
+                            outputFormat: progressProvider.outputFormat,
+                            imageName: newFileName);
+                      }
                     },
                     child: Text(
                       'NO, SKIP',
