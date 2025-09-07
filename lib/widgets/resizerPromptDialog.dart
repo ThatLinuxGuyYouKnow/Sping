@@ -59,7 +59,7 @@ Future<bool?> showResizerDialog(BuildContext context) async {
                       final newFileName = '$baseName.$newExtension';
 
                       Navigator.of(context).pop(false);
-                      if (isSVG) {
+                      if (!isSVG) {
                         await downloadWithFeedback(
                             context, bytes!, newFileName);
                       } else {

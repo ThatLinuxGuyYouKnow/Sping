@@ -81,7 +81,7 @@ class _OutputFormatSelectorState extends State<OutputFormatSelector> {
                     targetHeight:
                         int.parse(progressProvider.imageDimensions['height']!),
                     targetWidth:
-                        int.parse(progressProvider.imageDimensions['height']!));
+                        int.parse(progressProvider.imageDimensions['width']!));
                 progressProvider.setImageBytes(image!);
               } else {}
             },
