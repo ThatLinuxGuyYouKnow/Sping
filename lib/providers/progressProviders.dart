@@ -53,6 +53,12 @@ class ProgressProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearImageBytes() {
+    _imageBytes = null;
+    print('disposed image');
+    notifyListeners();
+  }
+
   setOriginalFileName({required String filename}) {
     _originalFilename = filename;
     notifyListeners();
